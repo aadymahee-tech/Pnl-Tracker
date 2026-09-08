@@ -1,4 +1,4 @@
 {
-    "error": "Tradetron Error: ",
-    "current_url": "https://tradetron.tech/login"
+    "error": "Stuck at Login. Page says: Features\nUse cases\nServices\nPricing\nContact\nIN\nSign up\nSign in\nSign in with Facebook\nSign in with Google\n\nor\n\nSign in\nEmail\nPassword\n\nForgot password?",
+    "url": "https://tradetron.tech/login"
 }
