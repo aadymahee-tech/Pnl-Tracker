@@ -1,4 +1,5 @@
 {
-    "error": "Stuck at Login. Page says: Features\nUse cases\nServices\nPricing\nContact\nIN\nSign up\nSign in\nSign in with Facebook\nSign in with Google\n\nor\n\nSign in\nEmail\nPassword\n\nForgot password?",
+    "error": "Page.wait_for_function: Timeout 60000ms exceeded.",
+    "page_msg": "",
     "url": "https://tradetron.tech/login"
 }
