@@ -16,47 +16,44 @@ def run_scraper():
             print("Step 1: Connecting...")
             page.goto("https://tradetron.tech/login", wait_until="networkidle", timeout=60000)
             
-            # Close any blocking overlays (Mobile promo, etc.)
+            # Close any blocking overlays
             try:
-                page.locator(".tt-app-promo__close, .close, .modal-close").first.click(timeout=5000)
-                print("Step 1b: Closed blocking overlay.")
+                if page.locator(".tt-app-promo__close").is_visible():
+                    page.locator(".tt-app-promo__close").click(timeout=5000)
             except: pass
 
             print("Step 2: Entering Credentials...")
-            # Use multi-selector logic for robustness
-            email_field = page.locator("input[name='email'], #modalEmailSignIn, input[type='email']").first
-            pass_field = page.locator("input[name='password'], #modalPasswordSignIn, input[type='password']").first
+            page.fill("input[name='email']", os.environ.get("TT_EMAIL"))
+            page.fill("input[name='password']", os.environ.get("TT_PASSWORD"))
             
-            email_field.fill(os.environ.get("TT_EMAIL"))
-            pass_field.fill(os.environ.get("TT_PASSWORD"))
+            print("Step 3: Clicking Login...")
+            page.click("button[type='submit']")
             
-            print("Step 3: Attempting Sign In...")
-            login_btn = page.locator("button[type='submit'], #signInButtonPopup, .btn-login").first
-            login_btn.click()
-            
-            # WAIT FOR DASHBOARD OR SUCCESS INDICATOR
-            print("Step 4: Waiting for Dashboard...")
-            page.wait_for_selector("a[href*='deployed-strategies'], .dashboard-wrapper, text='Deployed'", timeout=60000)
-            print("Step 5: Login Success! Fetching P&L...")
+            # Wait for URL to change to dashboard (Simple & Reliable)
+            print("Step 4: Waiting for Login success...")
+            page.wait_for_url("**/dashboard", timeout=60000)
+            print("Step 5: Login Success! Going to Deployed page...")
 
             page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle", timeout=60000)
             time.sleep(10) # Heavy buffer for pulsing data
 
             strategies = page.evaluate("""() => {
                 let results = [];
-                const cards = document.querySelectorAll('tr, .strategy-card, .deployment-card, .deployed-strategy-block');
+                const cards = document.querySelectorAll('tr, .strategy-card, .deployment-card');
                 cards.forEach(c => {
                     let text = c.innerText;
                     if (text.includes('by ') && (text.includes('₹') || text.includes('Rs.'))) {
-                        let name = text.split('\\n')[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
+                        let lines = text.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
+                        let name = lines[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
                         let pnl = 0.0;
-                        let pnlMatches = text.match(/[₹Rs\\.]\\s?([+-]?[\\d,]+\\.?\\d*)\\s*([Lk]?)/gi);
+                        let pnlMatches = text.match(/[₹Rs\\.]\\s?([+-]?[\\d,]+\\.?\\d*)/gi);
                         if (pnlMatches) {
-                            let val = pnlMatches[pnlMatches.length - 1].replace(/[₹Rs\\.\\s,]/gi, '');
+                            let lastMatch = pnlMatches[pnlMatches.length - 1];
+                            let val = lastMatch.replace(/[₹Rs\\.\\s,]/gi, '');
                             pnl = parseFloat(val) || 0.0;
                             if (text.toUpperCase().includes('K')) pnl *= 1000;
                             if (text.toUpperCase().includes('L')) pnl *= 100000;
-                            if (text.includes('-')) pnl *= -1;
+                            if (lastMatch.includes('-')) pnl *= -1;
                         }
                         results.push({ name, pnl });
                     }
@@ -68,13 +65,12 @@ def run_scraper():
             output = {"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}
             with open("data.json", "w") as f:
                 json.dump(output, f, indent=4)
+            print("DONE.")
 
         except Exception as e:
             print(f"FATAL ERROR: {str(e)}")
-            # Debug: Capture what the bot actually saw
-            page_text = page.content()[:500].replace('\n', ' ')
             with open("data.json", "w") as f:
-                json.dump({"error": str(e), "url": page.url, "snapshot": page_text}, f)
+                json.dump({"error": str(e), "url": page.url}, f)
         
         browser.close()
 
