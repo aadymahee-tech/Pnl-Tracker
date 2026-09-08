@@ -14,59 +14,57 @@ def run_scraper():
 
         try:
             print("Step 1: Connecting to Tradetron...")
-            page.goto("https://tradetron.tech/login", wait_until="networkidle", timeout=60000)
+            page.goto("https://tradetron.tech/login", wait_until="load", timeout=60000)
             
-            # Step 2: Entering Credentials
+            # KILL PROMOS: Remove any overlays that might block the bot's vision
+            page.evaluate("""() => {
+                document.querySelectorAll('.tt-app-promo__close, .close, .modal').forEach(el => el.remove());
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                document.body.classList.remove('modal-open');
+            }""")
+
             print("Step 2: Entering Credentials...")
-            page.type("input[name='email']", os.environ.get("TT_EMAIL"), delay=100)
-            page.type("input[name='password']", os.environ.get("TT_PASSWORD"), delay=100)
+            # We use strip() to remove any accidental spaces from GitHub Secrets
+            email = os.environ.get("TT_EMAIL").strip()
+            password = os.environ.get("TT_PASSWORD").strip()
             
-            # --- ALTCHA PROTECTION HANDLING ---
-            print("Step 3: Handling Human Verification (ALTCHA)...")
-            # We wait for the Altcha widget to appear and solve itself
-            # The browser will automatically do the math in the background
-            try:
-                # Wait up to 30 seconds for the 'Verified' state
-                page.wait_for_selector("altcha-widget", state="visible", timeout=10000)
-                print("Altcha found. Solving proof-of-work...")
-                
-                # We wait until the hidden input 'altcha' gets a value (the solution)
-                page.wait_for_function(
-                    "() => document.querySelector('input[name=\"altcha\"]').value.length > 10",
-                    timeout=30000
-                )
-                print("Verification Complete!")
-            except Exception as e:
-                print(f"Altcha Note: {str(e)} (Proceeding anyway)")
-
-            print("Step 4: Clicking Sign In...")
-            page.click("button[type='submit']")
+            page.type("input[name='email']", email, delay=100)
+            page.type("input[name='password']", password, delay=100)
             
-            # Step 5: Wait for Login success
-            time.sleep(10) 
-            if "login" in page.url:
-                page_text = page.inner_text("body")
-                raise Exception(f"Stuck at Login. Page says: {page_text[:150]}")
+            print("Step 3: Solving Altcha (Waiting for green signal)...")
+            # We wait for the hidden 'altcha' input to be filled with the server-side solution
+            page.wait_for_function(
+                "() => { const el = document.querySelector('input[name=\"altcha\"]'); return el && el.value.length > 30; }",
+                timeout=60000
+            )
+            print("Altcha Verified!")
 
-            print("Step 6: Success! Scraping Deployed Page...")
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle", timeout=60000)
-            time.sleep(5) 
+            print("Step 4: Submitting Login Form...")
+            # Use direct JS submission to bypass any UI blocking
+            page.evaluate("() => document.querySelector('button[type=\"submit\"]').click()")
+            
+            # WAIT FOR THE DASHBOARD
+            print("Step 5: Waiting for Dashboard...")
+            page.wait_for_selector("a[href*='deployed'], .dashboard-wrapper, text='Logout'", timeout=60000)
+            print("LOGIN SUCCESS!")
 
-            # Step 7: The Data Catch
+            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle")
+            time.sleep(10) # Heavy buffer for live numbers
+
             strategies = page.evaluate("""() => {
                 let results = [];
-                document.querySelectorAll('tr, .strategy-card, .deployment-card').forEach(el => {
+                document.querySelectorAll('div, tr, section, .strategy-card').forEach(el => {
                     let t = el.innerText;
-                    if (t.includes('by ') && (t.includes('₹') || t.includes('Rs.'))) {
-                        let lines = t.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
-                        let name = lines[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
+                    if (t.includes('by ') && (t.includes('₹') || t.includes('Rs.')) && t.length < 500 && t.length > 50) {
+                        let name = t.split('\\n')[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
                         let pnlMatches = t.match(/[₹Rs\\.]\\s?([+-]?[\\d,]+\\.?\\d*)/gi);
                         if (pnlMatches) {
-                            let val = pnlMatches[pnlMatches.length - 1].replace(/[₹Rs\\.\\s,]/gi, '');
+                            let lastMatch = pnlMatches[pnlMatches.length - 1];
+                            let val = lastMatch.replace(/[₹Rs\\.\\s,]/gi, '');
                             let pnl = parseFloat(val) || 0.0;
-                            if (t.toUpperCase().includes('K')) pnl *= 1000;
-                            if (t.toUpperCase().includes('L')) pnl *= 100000;
-                            if (pnlMatches[pnlMatches.length - 1].includes('-')) pnl *= -1;
+                            if (lastMatch.toUpperCase().includes('K')) pnl *= 1000;
+                            if (lastMatch.toUpperCase().includes('L')) pnl *= 100000;
+                            if (lastMatch.includes('-')) pnl *= -1;
                             results.push({ name, pnl });
                         }
                     }
@@ -74,14 +72,20 @@ def run_scraper():
                 return [...new Map(results.map(i => [i.name, i])).values()];
             }""")
 
-            print(f"DONE: Captured {len(strategies)} strategies.")
+            print(f"DONE: Captured {len(strategies)} items.")
             with open("data.json", "w") as f:
                 json.dump({"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}, f, indent=4)
 
         except Exception as e:
             print(f"FAILED: {str(e)}")
+            # Capture the exact error from the page (e.g. "Invalid Password")
+            try:
+                page_error = page.inner_text(".alert-danger, .text-danger")
+            except:
+                page_error = "No specific error on screen"
+            
             with open("data.json", "w") as f:
-                json.dump({"error": str(e), "url": page.url}, f, indent=4)
+                json.dump({"error": str(e), "page_msg": page_error, "url": page.url}, f, indent=4)
         
         browser.close()
 
