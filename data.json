@@ -1,5 +1,1 @@
-{
-    "last_updated": "13:59:00",
-    "final_url": "https://tradetron.tech/deployed-strategies",
-    "strategies": []
-}
+{"error": "Timeout 45000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard\" until 'load'\n============================================================", "url": "https://tradetron.tech/login"}
