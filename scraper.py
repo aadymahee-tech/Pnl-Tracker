@@ -5,33 +5,44 @@ from playwright.sync_api import sync_playwright
 
 def run_scraper():
     with sync_playwright() as p:
-        # Launch a standard browser
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
         try:
-            # 1. GO DIRECTLY TO DEPLOYED (It will force you to login)
-            print("Navigating...")
+            print("Step 1: Navigating to Deployed Page...")
             page.goto("https://tradetron.tech/deployed-strategies", timeout=60000)
             time.sleep(5)
 
-            # 2. LOGIN (Only if we are not already in)
             if "login" in page.url:
-                print("Logging in...")
-                # Fill the form using the most basic selectors
-                page.fill("input[name='email']", os.environ.get("TT_EMAIL").strip())
-                page.fill("input[name='password']", os.environ.get("TT_PASSWORD").strip())
+                print(f"Current URL is {page.url}. Login required.")
                 
-                # Just click the button. No waiting for Captchas.
-                page.click("button[type='submit']")
-                print("Form Submitted. Waiting for redirect...")
-                time.sleep(10)
-
-            # 3. SCRAPE (The simplest possible way)
-            print("Capturing P&L...")
+                # Check if fields exist
+                email_input = page.locator("input[name='email']").first
+                pass_input = page.locator("input[name='password']").first
+                
+                if email_input.is_visible():
+                    print("SUCCESS: Email field found. Filling...")
+                    email_input.fill(os.environ.get("TT_EMAIL").strip())
+                    
+                    print("SUCCESS: Password field found. Filling...")
+                    pass_input.fill(os.environ.get("TT_PASSWORD").strip())
+                    
+                    print("Step 2: Clicking Sign In Button...")
+                    # We use a forced click to ensure it goes through
+                    page.click("button[type='submit']", force=True)
+                    
+                    print("Step 3: Waiting for Redirect (15 seconds)...")
+                    time.sleep(15)
+                else:
+                    print("FAILURE: Could not find login fields. Tradetron might be showing a different page.")
+            
+            # Final Check
+            print(f"Final Page URL: {page.url}")
+            print("Step 4: Attempting to find P&L numbers...")
+            
             strategies = page.evaluate("""() => {
                 let data = [];
-                // Look for every deployment block
+                // Target the clean 'Lite' card or standard rows
                 document.querySelectorAll('.deployed-strategy-block, tr, .strategy-card').forEach(el => {
                     let txt = el.innerText;
                     if (txt.includes('by ') && (txt.includes('₹') || txt.includes('Rs.'))) {
@@ -51,16 +62,18 @@ def run_scraper():
                 return data;
             }""")
 
-            # 4. SAVE
+            print(f"Step 5: Process Complete. Found {len(strategies)} strategies.")
+            
             with open("data.json", "w") as f:
                 json.dump({
                     "last_updated": time.strftime("%H:%M:%S"),
+                    "final_url": page.url,
                     "count": len(strategies),
                     "strategies": strategies
                 }, f, indent=4)
-            print(f"Success! Saved {len(strategies)} strategies.")
 
         except Exception as e:
+            print(f"CRITICAL ERROR: {str(e)}")
             with open("data.json", "w") as f:
                 json.dump({"error": str(e), "url": page.url}, f)
         
