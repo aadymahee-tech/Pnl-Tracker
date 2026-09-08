@@ -1,8 +1,2170 @@
 {
-    "last_updated": "19:01:34",
+    "last_updated": "21:50:08",
     "strategies": {
         "success": true,
         "data": [
+            {
+                "created_at": "2026-07-13T03:12:14.000000Z",
+                "created_by_id": 692663,
+                "deployment_date": "2026-07-13T00:00:00.000000Z",
+                "deployment_type": "LIVE AUTO",
+                "id": 30443814,
+                "run_counter": 37,
+                "status": "Active",
+                "display_run_counter_pnl": true,
+                "sum_of_pnl": 8791.25,
+                "strategy_broker": {
+                    "id": 32074390,
+                    "exchange": "NFO",
+                    "broker": {
+                        "id": 361,
+                        "name": "FlatTrade"
+                    }
+                },
+                "strategy_template_id": 9491430,
+                "subscriber_id": 692663,
+                "user": {
+                    "id": 692663,
+                    "name": "Vaibhav Porwal"
+                },
+                "template": {
+                    "id": 9491430,
+                    "name": "part 1 far otm hedge",
+                    "user": {
+                        "id": 2616805,
+                        "name": "Edgocity"
+                    },
+                    "created_by_id": 2616805,
+                    "strategy_params": "{\"PNL_buffer_for_entry\":\"( tt_Number ( '0.8' )  )\",\"HEDGES_AWAY_COUNT\":\"( tt_Number ( '14' )  )\",\"BX_weekday\":\"( tt_Number ( '1' )  )\",\"FN_weekday\":\"( tt_Number ( '2' )  )\",\"BN_weekday\":\"( tt_Number ( '3' )  )\",\"NF_weekday\":\"( tt_Number ( '4' )  )\",\"SX_weekday\":\"( tt_Number ( '5' )  )\",\"BX_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"FN_STRIKE_DIFF\":\"( tt_Number ( '50' )  )\",\"BN_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"NF_STRIKE_DIFF\":\"( tt_Number ( '50' )  )\",\"SX_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"status_1\":\"( tt_Number ( '0' )  )\",\"entry_time_1\":\"( tt_Number ( '918' )  )\",\"exit_time_1\":\"( tt_Number ( '1515' )  )\",\"last_entry_time_1\":\"( tt_Number ( '1500' )  )\",\"finally_enter_at_1\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_1\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_1\":\"( tt_Number ( '1' )  )\",\"pnl_1\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_1\":\"( tt_Number ( '1.5' )  )\",\"leg_target_per_1\":\"( tt_Number ( '0.2' )  )\",\"max_sl_1_base\":\"( tt_Number ( '-2000' )  )\",\"max_target_1_base\":\"( tt_Number ( '6000' )  )\",\"param_for_long_1\":\"( tt_Number ( '1' )  )\",\"param_for_super_long_1\":\"( tt_Number ( '3' )  )\",\"param_for_short_1\":\"( tt_Number ( '2' )  )\",\"param_for_super_short_1\":\"( tt_Number ( '4' )  )\",\"param_for_long_finally_1\":\"( tt_Number ( '1' )  )\",\"param_for_short_finally_1\":\"( tt_Number ( '3' )  )\",\"status_2\":\"( tt_Number ( '0' )  )\",\"status_3\":\"( tt_Number ( '0' )  )\",\"status_4\":\"( tt_Number ( '0' )  )\",\"status_5\":\"( tt_Number ( '0' )  )\",\"entry_time_2\":\"( tt_Number ( '1052' )  )\",\"entry_time_3\":\"( tt_Number ( '1139' )  )\",\"entry_time_4\":\"( tt_Number ( '1159' )  )\",\"entry_time_5\":\"( tt_Number ( '1419' )  )\",\"exit_time_2\":\"( tt_Number ( '1445' )  )\",\"exit_time_3\":\"( tt_Number ( '1457' )  )\",\"exit_time_4\":\"( tt_Number ( '1520' )  )\",\"exit_time_5\":\"( tt_Number ( '1524' )  )\",\"last_entry_time_2\":\"( tt_Number ( '1405' )  )\",\"last_entry_time_3\":\"( tt_Number ( '1420' )  )\",\"last_entry_time_4\":\"( tt_Number ( '1505' )  )\",\"last_entry_time_5\":\"( tt_Number ( '1510' )  )\",\"finally_enter_at_2\":\"( tt_Number ( '1600' )  )\",\"finally_enter_at_3\":\"( tt_Number ( '1600' )  )\",\"finally_enter_at_4\":\"( tt_Number ( '1600' )  )\",\"finally_enter_at_5\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_2\":\"( tt_Number ( '10' )  )\",\"REENTRY_COUNTS_3\":\"( tt_Number ( '10' )  )\",\"REENTRY_COUNTS_4\":\"( tt_Number ( '10' )  )\",\"REENTRY_COUNTS_5\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_2\":\"( tt_Number ( '0' )  )\",\"GO_ITM_COUNT_3\":\"( tt_Number ( '-1' )  )\",\"GO_ITM_COUNT_4\":\"( tt_Number ( '0' )  )\",\"GO_ITM_COUNT_5\":\"( tt_Number ( '0' )  )\",\"pnl_2\":\"( tt_Number ( '0' )  )\",\"pnl_3\":\"( tt_Number ( '0' )  )\",\"pnl_4\":\"( tt_Number ( '0' )  )\",\"pnl_5\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_2\":\"( tt_Number ( '1.5' )  )\",\"leg_sl_per_3\":\"( tt_Number ( '1.5' )  )\",\"leg_sl_per_4\":\"( tt_Number ( '1.5' )  )\",\"leg_sl_per_5\":\"( tt_Number ( '1.5' )  )\",\"leg_target_per_2\":\"( tt_Number ( '0.2' )  )\",\"leg_target_per_3\":\"( tt_Number ( '0.2' )  )\",\"leg_target_per_4\":\"( tt_Number ( '0.2' )  )\",\"leg_target_per_5\":\"( tt_Number ( '0.2' )  )\",\"max_sl_2_base\":\"( tt_Number ( '-2000' )  )\",\"max_sl_3_base\":\"( tt_Number ( '-2000' )  )\",\"max_sl_4_base\":\"( tt_Number ( '-2000' )  )\",\"max_sl_5_base\":\"( tt_Number ( '-2000' )  )\",\"max_target_2_base\":\"( tt_Number ( '6000' )  )\",\"max_target_3_base\":\"( tt_Number ( '6000' )  )\",\"max_target_4_base\":\"( tt_Number ( '6000' )  )\",\"max_target_5_base\":\"( tt_Number ( '6000' )  )\",\"param_for_long_2\":\"( tt_Number ( '1' )  )\",\"param_for_long_3\":\"( tt_Number ( '1' )  )\",\"param_for_long_4\":\"( tt_Number ( '1' )  )\",\"param_for_long_5\":\"( tt_Number ( '1' )  )\",\"param_for_super_long_2\":\"( tt_Number ( '3' )  )\",\"param_for_super_long_3\":\"( tt_Number ( '3' )  )\",\"param_for_super_long_4\":\"( tt_Number ( '3' )  )\",\"param_for_super_long_5\":\"( tt_Number ( '3' )  )\",\"param_for_short_2\":\"( tt_Number ( '2' )  )\",\"param_for_short_3\":\"( tt_Number ( '2' )  )\",\"param_for_short_4\":\"( tt_Number ( '2' )  )\",\"param_for_short_5\":\"( tt_Number ( '2' )  )\",\"param_for_super_short_2\":\"( tt_Number ( '4' )  )\",\"param_for_super_short_3\":\"( tt_Number ( '4' )  )\",\"param_for_super_short_4\":\"( tt_Number ( '4' )  )\",\"param_for_super_short_5\":\"( tt_Number ( '4' )  )\",\"param_for_long_finally_2\":\"( tt_Number ( '1' )  )\",\"param_for_long_finally_3\":\"( tt_Number ( '1' )  )\",\"param_for_long_finally_4\":\"( tt_Number ( '1' )  )\",\"param_for_long_finally_5\":\"( tt_Number ( '1' )  )\",\"param_for_short_finally_2\":\"( tt_Number ( '3' )  )\",\"param_for_short_finally_3\":\"( tt_Number ( '3' )  )\",\"param_for_short_finally_4\":\"( tt_Number ( '3' )  )\",\"param_for_short_finally_5\":\"( tt_Number ( '3' )  )\",\"exit_1\":\"( tt_Number ( '0' )  )\",\"exit_2\":\"( tt_Number ( '0' )  )\",\"exit_3\":\"( tt_Number ( '0' )  )\",\"exit_4\":\"( tt_Number ( '0' )  )\",\"exit_5\":\"( tt_Number ( '0' )  )\",\"wat_1\":\"( tt_Number ( '1' )  )\",\"wat_2\":\"( tt_Number ( '0.85' )  )\",\"wat_3\":\"( tt_Number ( '0.85' )  )\",\"wat_4\":\"( tt_Number ( '1' )  )\",\"wat_5\":\"( tt_Number ( '1' )  )\",\"status_6\":\"( tt_Number ( '0' )  )\",\"entry_time_6\":\"( tt_Number ( '0930' )  )\",\"exit_time_6\":\"( tt_Number ( '1515' )  )\",\"last_entry_time_6\":\"( tt_Number ( '1500' )  )\",\"finally_enter_at_6\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_6\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_6\":\"( tt_Number ( '0' )  )\",\"pnl_6\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_6\":\"( tt_Number ( '1.4' )  )\",\"leg_target_per_6\":\"( tt_Number ( '0.2' )  )\",\"max_sl_6_base\":\"( tt_Number ( '-1500' )  )\",\"max_target_6_base\":\"( tt_Number ( '5000' )  )\",\"exit_6\":\"( tt_Number ( '0' )  )\",\"pl_roll_strike_apart_by_ratio_6\":\"( tt_Number ( '1.3' )  )\",\"switched_to_monthly_BN\":\"( tt_Number ( '1' )  )\",\"switched_to_monthly_FN\":\"( tt_Number ( '1' )  )\",\"switched_to_monthly_BX\":\"( tt_Number ( '1' )  )\",\"trade_1dte_NF\":\"( tt_Number ( '1' )  )\",\"trade_2dte_NF\":\"( tt_Number ( '0' )  )\",\"trade_3dte_NF\":\"( tt_Number ( '0' )  )\",\"MANUAL_OVERRIDE\":\"( tt_Number ( '0' )  )\",\"manual_index_to_trade\":\"( tt_Number ( '99' )  )\",\"amount_multiplier_1\":\"( tt_Number ( '3' )  )\",\"amount_multiplier_2\":\"( tt_Number ( '1' )  )\",\"bypass_ltp_filter\":\"( tt_Number ( '0' )  )\",\"ltp_filter_ratio\":\"( tt_Number ( '0.05' )  )\",\"HEDGES_BELOW_NF\":\"( tt_Number ( '1' )  )\",\"HEDGES_BELOW_SX\":\"( tt_Number ( '3.2' )  )\",\"HEDGES_BELOW_BX\":\"( tt_Number ( '2.5' )  )\",\"HEDGES_BELOW_BN\":\"( tt_Number ( '2' )  )\",\"HEDGES_BELOW_FN\":\"( tt_Number ( '0.9' )  )\"}",
+                    "min_multiple": 1,
+                    "capital_required": 900000,
+                    "variable_fee": "10.00",
+                    "display_positions_to_non_subscribers": 0,
+                    "profile": {
+                        "id": 9395454,
+                        "strategy_template_id": 9491430,
+                        "exchanges_data": "NFO,BFO",
+                        "deployed_display_type": 1,
+                        "max_multiple": 100,
+                        "country": "IN",
+                        "currency_code": "INR"
+                    }
+                },
+                "user_notes": "",
+                "calculated_positions": [
+                    {
+                        "strategy_id": 30443814,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_24400",
+                        "quantity": 0,
+                        "price": 0.1,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:49:15",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 5.1351382550971095e-05,
+                        "delta": 0.00503674150181888,
+                        "iv": 90.46320540896374,
+                        "vega": 0.045599564792933665,
+                        "theta": -32.21905203497603,
+                        "pnl": -247,
+                        "exp": 0,
+                        "entry_value": 247
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23650",
+                        "quantity": 0,
+                        "price": 31.65,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:49:15",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0065057340231746965,
+                        "delta": 0.019119745086415504,
+                        "iv": 30.5685122165202,
+                        "vega": 0.010920497366464223,
+                        "theta": -465.19900094169975,
+                        "pnl": 7085,
+                        "exp": 0,
+                        "entry_value": -7085
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23300",
+                        "quantity": 0,
+                        "price": 0.6,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:49:15",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 8.294058554962939e-05,
+                        "delta": -0.002999156505059369,
+                        "iv": 90.43263429260168,
+                        "vega": 0.011154575643212164,
+                        "theta": -51.75471128828072,
+                        "pnl": -29.250000000000007,
+                        "exp": 0,
+                        "entry_value": 29.25
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23650",
+                        "quantity": 0,
+                        "price": 20.25,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:49:15",
+                        "expired": "no",
+                        "ltp": 14.85,
+                        "gamma": 0.011875009298687919,
+                        "delta": -0.9474474540319477,
+                        "iv": 37.37337762639423,
+                        "vega": 0.02594344924550501,
+                        "theta": -1269.287117127427,
+                        "pnl": 594.75,
+                        "exp": 0,
+                        "entry_value": -594.75
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23700",
+                        "quantity": 0,
+                        "price": 20.4,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:27:01",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0006659823068605839,
+                        "delta": 0.0060453978545367115,
+                        "iv": 55.51482402560547,
+                        "vega": 0.00792458148653511,
+                        "theta": -157.06654097113815,
+                        "pnl": 3594.5,
+                        "exp": 0,
+                        "entry_value": -3594.5
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23700",
+                        "quantity": 0,
+                        "price": 51.8,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 05:07:03",
+                        "expired": "no",
+                        "ltp": 64.75,
+                        "gamma": 0,
+                        "delta": -1,
+                        "iv": 0,
+                        "vega": 0,
+                        "theta": 0,
+                        "pnl": -1150.4999999999998,
+                        "exp": 0,
+                        "entry_value": 1150.5
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23600",
+                        "quantity": 0,
+                        "price": 82.45,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 08:42:11",
+                        "expired": "no",
+                        "ltp": 35,
+                        "gamma": 0,
+                        "delta": 1,
+                        "iv": 0,
+                        "vega": 0,
+                        "theta": 0,
+                        "pnl": -1534,
+                        "exp": 0,
+                        "entry_value": 1534
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23600",
+                        "quantity": 0,
+                        "price": 12.85,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 08:42:11",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0017074945440771212,
+                        "delta": -0.009719010786393206,
+                        "iv": 62.038536110166795,
+                        "vega": 0.006380057632607516,
+                        "theta": -502.91081257824004,
+                        "pnl": 477.7500000000001,
+                        "exp": 0,
+                        "entry_value": -477.75
+                    }
+                ],
+                "max_run_counter": 36,
+                "has_zero_quantity": null,
+                "local": 3,
+                "blocked_term": null,
+                "minimum_multiple": 1,
+                "deployed_display_type": 1,
+                "max_multiple": 100,
+                "exchange": "NFO,BFO",
+                "market_open": null,
+                "is_blur": false,
+                "globalPt": null,
+                "ltp_precision": 2,
+                "access_level": "Write",
+                "exit_on_error": 0,
+                "stockbag": null,
+                "strategyExtra": {
+                    "id": 8833838,
+                    "strategy_id": 30443814,
+                    "exclude_booked_pnl": 0,
+                    "is_broker_sponsored": 0
+                },
+                "can_change_broker": true,
+                "filtered_run_counter": [
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 36,
+                        "pnl": 8791.250508017838
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 35,
+                        "pnl": 6542.249316573143
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 34,
+                        "pnl": 10190.000002980232
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 33,
+                        "pnl": -4343.999886512756
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 32,
+                        "pnl": -383.50051760673523
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 31,
+                        "pnl": -5066.750419586897
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 30,
+                        "pnl": -8560.499507188797
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 29,
+                        "pnl": 5821.000630557537
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 28,
+                        "pnl": 4656.999735832214
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 27,
+                        "pnl": -11107.49998524785
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 26,
+                        "pnl": 6208.500916957855
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 25,
+                        "pnl": -4620.999692082405
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 24,
+                        "pnl": 1011.0001230239868
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 23,
+                        "pnl": -1953.249766137451
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 22,
+                        "pnl": -8056.7499604821205
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 21,
+                        "pnl": 1576.0004192590714
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 20,
+                        "pnl": -10356.002423763275
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 19,
+                        "pnl": 15356.250116713345
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 18,
+                        "pnl": 4732.001085579395
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 17,
+                        "pnl": 1896.998096704483
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 16,
+                        "pnl": 3330.9991312026978
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 15,
+                        "pnl": -8934.250224903226
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 14,
+                        "pnl": 438.7499263882637
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 13,
+                        "pnl": 4651.000078245997
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 11,
+                        "pnl": 26.001300811767578
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 10,
+                        "pnl": 9663.000282235444
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 9,
+                        "pnl": -961.5013933181763
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 8,
+                        "pnl": -13268.999435901642
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 7,
+                        "pnl": -5063.999767303467
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 6,
+                        "pnl": 4959.500522110611
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 5,
+                        "pnl": 10006.749367713928
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 4,
+                        "pnl": 2540.9996812045574
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 3,
+                        "pnl": -6693.000926971436
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 2,
+                        "pnl": 672.7497206628323
+                    },
+                    {
+                        "strategy_id": 30443814,
+                        "run_counter": 1,
+                        "pnl": 12262.250463366508
+                    }
+                ],
+                "currency": "\u20b9 ",
+                "country": "IN",
+                "currency_code": "INR",
+                "all_pnl": 25963.247519135475,
+                "last_pnl": 6542.249316573143,
+                "can_unblock": false,
+                "is_stockbag": false,
+                "exclude_booked_pnl": false,
+                "allow_execution": true,
+                "advanced_wizard_id": null,
+                "is_advanced_wizard": false,
+                "advanced_wizard": null
+            },
+            {
+                "created_at": "2026-07-13T03:12:24.000000Z",
+                "created_by_id": 692663,
+                "deployment_date": "2026-07-13T00:00:00.000000Z",
+                "deployment_type": "LIVE AUTO",
+                "id": 30443834,
+                "run_counter": 37,
+                "status": "Active",
+                "display_run_counter_pnl": true,
+                "sum_of_pnl": 2070.2499999999995,
+                "strategy_broker": {
+                    "id": 32074422,
+                    "exchange": "NFO",
+                    "broker": {
+                        "id": 361,
+                        "name": "FlatTrade"
+                    }
+                },
+                "strategy_template_id": 9491434,
+                "subscriber_id": 692663,
+                "user": {
+                    "id": 692663,
+                    "name": "Vaibhav Porwal"
+                },
+                "template": {
+                    "id": 9491434,
+                    "name": "part 2 far otm hedge",
+                    "user": {
+                        "id": 2616805,
+                        "name": "Edgocity"
+                    },
+                    "created_by_id": 2616805,
+                    "strategy_params": "{\"PNL_buffer_for_entry\":\"( tt_Number ( '0.8' )  )\",\"HEDGES_AWAY_COUNT\":\"( tt_Number ( '14' )  )\",\"BX_weekday\":\"( tt_Number ( '1' )  )\",\"FN_weekday\":\"( tt_Number ( '2' )  )\",\"BN_weekday\":\"( tt_Number ( '3' )  )\",\"NF_weekday\":\"( tt_Number ( '4' )  )\",\"SX_weekday\":\"( tt_Number ( '5' )  )\",\"BX_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"FN_STRIKE_DIFF\":\"( tt_Number ( '50' )  )\",\"BN_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"NF_STRIKE_DIFF\":\"( tt_Number ( '50' )  )\",\"SX_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"status_1\":\"( tt_Number ( '0' )  )\",\"entry_time_1\":\"( tt_Number ( '957' )  )\",\"exit_time_1\":\"( tt_Number ( '1515' )  )\",\"last_entry_time_1\":\"( tt_Number ( '1500' )  )\",\"finally_enter_at_1\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_1\":\"( tt_Number ( '1' )  )\",\"GO_ITM_COUNT_1\":\"( tt_Number ( '0' )  )\",\"pnl_1\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_1\":\"( tt_Number ( '1.5' )  )\",\"leg_target_per_1\":\"( tt_Number ( '0.2' )  )\",\"max_sl_1_base\":\"( tt_Number ( '-2000' )  )\",\"max_target_1_base\":\"( tt_Number ( '6000' )  )\",\"param_for_long_1\":\"( tt_Number ( '1' )  )\",\"param_for_super_long_1\":\"( tt_Number ( '3' )  )\",\"param_for_short_1\":\"( tt_Number ( '2' )  )\",\"param_for_super_short_1\":\"( tt_Number ( '4' )  )\",\"param_for_long_finally_1\":\"( tt_Number ( '1' )  )\",\"param_for_short_finally_1\":\"( tt_Number ( '3' )  )\",\"status_2\":\"( tt_Number ( '0' )  )\",\"status_3\":\"( tt_Number ( '0' )  )\",\"status_4\":\"( tt_Number ( '0' )  )\",\"status_5\":\"( tt_Number ( '0' )  )\",\"entry_time_2\":\"( tt_Number ( '1208' )  )\",\"entry_time_3\":\"( tt_Number ( '1304' )  )\",\"entry_time_4\":\"( tt_Number ( '1414' )  )\",\"entry_time_5\":\"( tt_Number ( '1421' )  )\",\"exit_time_2\":\"( tt_Number ( '1447' )  )\",\"exit_time_3\":\"( tt_Number ( '1455' )  )\",\"exit_time_4\":\"( tt_Number ( '1515' )  )\",\"exit_time_5\":\"( tt_Number ( '1526' )  )\",\"last_entry_time_2\":\"( tt_Number ( '1435' )  )\",\"last_entry_time_3\":\"( tt_Number ( '1420' )  )\",\"last_entry_time_4\":\"( tt_Number ( '1507' )  )\",\"last_entry_time_5\":\"( tt_Number ( '1515' )  )\",\"finally_enter_at_2\":\"( tt_Number ( '1600' )  )\",\"finally_enter_at_3\":\"( tt_Number ( '1600' )  )\",\"finally_enter_at_4\":\"( tt_Number ( '1600' )  )\",\"finally_enter_at_5\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_2\":\"( tt_Number ( '10' )  )\",\"REENTRY_COUNTS_3\":\"( tt_Number ( '10' )  )\",\"REENTRY_COUNTS_4\":\"( tt_Number ( '10' )  )\",\"REENTRY_COUNTS_5\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_2\":\"( tt_Number ( '0' )  )\",\"GO_ITM_COUNT_3\":\"( tt_Number ( '1' )  )\",\"GO_ITM_COUNT_4\":\"( tt_Number ( '0' )  )\",\"GO_ITM_COUNT_5\":\"( tt_Number ( '1' )  )\",\"pnl_2\":\"( tt_Number ( '0' )  )\",\"pnl_3\":\"( tt_Number ( '0' )  )\",\"pnl_4\":\"( tt_Number ( '0' )  )\",\"pnl_5\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_2\":\"( tt_Number ( '1.5' )  )\",\"leg_sl_per_3\":\"( tt_Number ( '1.5' )  )\",\"leg_sl_per_4\":\"( tt_Number ( '1.5' )  )\",\"leg_sl_per_5\":\"( tt_Number ( '1.5' )  )\",\"leg_target_per_2\":\"( tt_Number ( '0.2' )  )\",\"leg_target_per_3\":\"( tt_Number ( '0.2' )  )\",\"leg_target_per_4\":\"( tt_Number ( '0.2' )  )\",\"leg_target_per_5\":\"( tt_Number ( '0.2' )  )\",\"max_sl_2_base\":\"( tt_Number ( '-2000' )  )\",\"max_sl_3_base\":\"( tt_Number ( '-2000' )  )\",\"max_sl_4_base\":\"( tt_Number ( '-2000' )  )\",\"max_sl_5_base\":\"( tt_Number ( '-2000' )  )\",\"max_target_2_base\":\"( tt_Number ( '6000' )  )\",\"max_target_3_base\":\"( tt_Number ( '6000' )  )\",\"max_target_4_base\":\"( tt_Number ( '6000' )  )\",\"max_target_5_base\":\"( tt_Number ( '6000' )  )\",\"param_for_long_2\":\"( tt_Number ( '1' )  )\",\"param_for_long_3\":\"( tt_Number ( '1' )  )\",\"param_for_long_4\":\"( tt_Number ( '1' )  )\",\"param_for_long_5\":\"( tt_Number ( '1' )  )\",\"param_for_super_long_2\":\"( tt_Number ( '3' )  )\",\"param_for_super_long_3\":\"( tt_Number ( '3' )  )\",\"param_for_super_long_4\":\"( tt_Number ( '3' )  )\",\"param_for_super_long_5\":\"( tt_Number ( '3' )  )\",\"param_for_short_2\":\"( tt_Number ( '2' )  )\",\"param_for_short_3\":\"( tt_Number ( '2' )  )\",\"param_for_short_4\":\"( tt_Number ( '2' )  )\",\"param_for_short_5\":\"( tt_Number ( '2' )  )\",\"param_for_super_short_2\":\"( tt_Number ( '4' )  )\",\"param_for_super_short_3\":\"( tt_Number ( '4' )  )\",\"param_for_super_short_4\":\"( tt_Number ( '4' )  )\",\"param_for_super_short_5\":\"( tt_Number ( '4' )  )\",\"param_for_long_finally_2\":\"( tt_Number ( '1' )  )\",\"param_for_long_finally_3\":\"( tt_Number ( '1' )  )\",\"param_for_long_finally_4\":\"( tt_Number ( '1' )  )\",\"param_for_long_finally_5\":\"( tt_Number ( '1' )  )\",\"param_for_short_finally_2\":\"( tt_Number ( '3' )  )\",\"param_for_short_finally_3\":\"( tt_Number ( '3' )  )\",\"param_for_short_finally_4\":\"( tt_Number ( '3' )  )\",\"param_for_short_finally_5\":\"( tt_Number ( '3' )  )\",\"exit_1\":\"( tt_Number ( '0' )  )\",\"exit_2\":\"( tt_Number ( '0' )  )\",\"exit_3\":\"( tt_Number ( '0' )  )\",\"exit_4\":\"( tt_Number ( '0' )  )\",\"exit_5\":\"( tt_Number ( '0' )  )\",\"wat_1\":\"( tt_Number ( '1' )  )\",\"wat_2\":\"( tt_Number ( '0.85' )  )\",\"wat_3\":\"( tt_Number ( '0.85' )  )\",\"wat_4\":\"( tt_Number ( '0.85' )  )\",\"wat_5\":\"( tt_Number ( '1' )  )\",\"status_6\":\"( tt_Number ( '0' )  )\",\"entry_time_6\":\"( tt_Number ( '0917' )  )\",\"exit_time_6\":\"( tt_Number ( '1455' )  )\",\"last_entry_time_6\":\"( tt_Number ( '1430' )  )\",\"finally_enter_at_6\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_6\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_6\":\"( tt_Number ( '0' )  )\",\"pnl_6\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_6\":\"( tt_Number ( '1.3' )  )\",\"leg_target_per_6\":\"( tt_Number ( '0.2' )  )\",\"max_sl_6_base\":\"( tt_Number ( '-2000' )  )\",\"max_target_6_base\":\"( tt_Number ( '5000' )  )\",\"exit_6\":\"( tt_Number ( '0' )  )\",\"pl_roll_strike_apart_by_ratio_6\":\"( tt_Number ( '0.9' )  )\",\"switched_to_monthly_BN\":\"( tt_Number ( '1' )  )\",\"switched_to_monthly_FN\":\"( tt_Number ( '1' )  )\",\"switched_to_monthly_BX\":\"( tt_Number ( '1' )  )\",\"trade_1dte_NF\":\"( tt_Number ( '1' )  )\",\"trade_2dte_NF\":\"( tt_Number ( '0' )  )\",\"trade_3dte_NF\":\"( tt_Number ( '0' )  )\",\"MANUAL_OVERRIDE\":\"( tt_Number ( '0' )  )\",\"manual_index_to_trade\":\"( tt_Number ( '99' )  )\",\"amount_multiplier_1\":\"( tt_Number ( '3' )  )\",\"amount_multiplier_2\":\"( tt_Number ( '1' )  )\",\"bypass_ltp_filter\":\"( tt_Number ( '0' )  )\",\"ltp_filter_ratio\":\"( tt_Number ( '0.05' )  )\",\"HEDGES_BELOW_NF\":\"( tt_Number ( '1' )  )\",\"HEDGES_BELOW_SX\":\"( tt_Number ( '3.2' )  )\",\"HEDGES_BELOW_BX\":\"( tt_Number ( '2.5' )  )\",\"HEDGES_BELOW_BN\":\"( tt_Number ( '2' )  )\",\"HEDGES_BELOW_FN\":\"( tt_Number ( '0.9' )  )\"}",
+                    "min_multiple": 1,
+                    "capital_required": 900000,
+                    "variable_fee": "10.00",
+                    "display_positions_to_non_subscribers": 0,
+                    "profile": {
+                        "id": 9395458,
+                        "strategy_template_id": 9491434,
+                        "exchanges_data": "NFO,BFO",
+                        "deployed_display_type": 1,
+                        "max_multiple": 100,
+                        "country": "IN",
+                        "currency_code": "INR"
+                    }
+                },
+                "user_notes": "",
+                "calculated_positions": [
+                    {
+                        "strategy_id": 30443834,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_24400",
+                        "quantity": 0,
+                        "price": 0.15,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:39",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 5.1351382550971095e-05,
+                        "delta": 0.00503674150181888,
+                        "iv": 90.46320540896374,
+                        "vega": 0.045599564792933665,
+                        "theta": -32.21905203497603,
+                        "pnl": -130,
+                        "exp": 0,
+                        "entry_value": 130
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23300",
+                        "quantity": 0,
+                        "price": 0.55,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:39",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 8.294058554962939e-05,
+                        "delta": -0.002999156505059369,
+                        "iv": 90.43263429260168,
+                        "vega": 0.011154575643212164,
+                        "theta": -51.75471128828072,
+                        "pnl": -29.25,
+                        "exp": 0,
+                        "entry_value": 29.25
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23700",
+                        "quantity": 0,
+                        "price": 29.6,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 06:20:15",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0006659823068605839,
+                        "delta": 0.0060453978545367115,
+                        "iv": 55.51482402560547,
+                        "vega": 0.00792458148653511,
+                        "theta": -157.06654097113815,
+                        "pnl": 1352,
+                        "exp": 0,
+                        "entry_value": -1352
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23700",
+                        "quantity": 0,
+                        "price": 57.9,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 06:20:15",
+                        "expired": "no",
+                        "ltp": 64.75,
+                        "gamma": 0,
+                        "delta": -1,
+                        "iv": 0,
+                        "vega": 0,
+                        "theta": 0,
+                        "pnl": -659.7499999999999,
+                        "exp": 0,
+                        "entry_value": 659.75
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23650",
+                        "quantity": 0,
+                        "price": 35,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:39",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0065057340231746965,
+                        "delta": 0.019119745086415504,
+                        "iv": 30.5685122165202,
+                        "vega": 0.010920497366464223,
+                        "theta": -465.19900094169975,
+                        "pnl": 2726.75,
+                        "exp": 0,
+                        "entry_value": -2726.75
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23650",
+                        "quantity": 0,
+                        "price": 36.1,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:39",
+                        "expired": "no",
+                        "ltp": 14.85,
+                        "gamma": 0.011875009298687919,
+                        "delta": -0.9474474540319477,
+                        "iv": 37.37337762639423,
+                        "vega": 0.02594344924550501,
+                        "theta": -1269.287117127427,
+                        "pnl": -955.5000000000002,
+                        "exp": 0,
+                        "entry_value": 955.5
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_24300",
+                        "quantity": 0,
+                        "price": 0.2,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:40:27",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 5.178783253284666e-05,
+                        "delta": 0.004122399659449525,
+                        "iv": 89.18212696652284,
+                        "vega": 0.03207377892592025,
+                        "theta": -31.61156766871334,
+                        "pnl": -55.25,
+                        "exp": 0,
+                        "entry_value": 55.25
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23600",
+                        "quantity": 0,
+                        "price": 65.5,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:39",
+                        "expired": "no",
+                        "ltp": 35,
+                        "gamma": 0,
+                        "delta": 1,
+                        "iv": 0,
+                        "vega": 0,
+                        "theta": 0,
+                        "pnl": -533.0000000000005,
+                        "exp": 0,
+                        "entry_value": 533
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23600",
+                        "quantity": 0,
+                        "price": 14.75,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 08:34:11",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0017074945440771212,
+                        "delta": -0.009719010786393206,
+                        "iv": 62.038536110166795,
+                        "vega": 0.006380057632607516,
+                        "theta": -502.91081257824004,
+                        "pnl": 354.25,
+                        "exp": 0,
+                        "entry_value": -354.25
+                    }
+                ],
+                "max_run_counter": 36,
+                "has_zero_quantity": null,
+                "local": 3,
+                "blocked_term": null,
+                "minimum_multiple": 1,
+                "deployed_display_type": 1,
+                "max_multiple": 100,
+                "exchange": "NFO,BFO",
+                "market_open": null,
+                "is_blur": false,
+                "globalPt": null,
+                "ltp_precision": 2,
+                "access_level": "Write",
+                "exit_on_error": 0,
+                "stockbag": null,
+                "strategyExtra": {
+                    "id": 8833846,
+                    "strategy_id": 30443834,
+                    "exclude_booked_pnl": 0,
+                    "is_broker_sponsored": 0
+                },
+                "can_change_broker": true,
+                "filtered_run_counter": [
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 36,
+                        "pnl": 2070.2503521740437
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 35,
+                        "pnl": 2827.4998140335083
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 34,
+                        "pnl": 1399.9997472763062
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 33,
+                        "pnl": -1396.9984889030457
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 32,
+                        "pnl": 3457.999770641327
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 31,
+                        "pnl": -3945.5002956092358
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 30,
+                        "pnl": -14482.000333964825
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 29,
+                        "pnl": 731.0004496574402
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 28,
+                        "pnl": 980.0004959106445
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 27,
+                        "pnl": -5015.999442636967
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 26,
+                        "pnl": 2422.5003361701965
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 25,
+                        "pnl": 1326.9999247789383
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 24,
+                        "pnl": -1660.9999561309814
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 23,
+                        "pnl": -2196.9996726699173
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 22,
+                        "pnl": -4234.750695824623
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 21,
+                        "pnl": 5661.000329852104
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 20,
+                        "pnl": -2525.001711845398
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 19,
+                        "pnl": 7452.249094285071
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 18,
+                        "pnl": 1742.0013955235481
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 17,
+                        "pnl": -1088.9997565746307
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 16,
+                        "pnl": -3048.999581336975
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 15,
+                        "pnl": -887.2496814839542
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 14,
+                        "pnl": -29.250661730766296
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 13,
+                        "pnl": 5610.000388547778
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 11,
+                        "pnl": 930.0007963180542
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 10,
+                        "pnl": 10825.4999050498
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 9,
+                        "pnl": -5113.501968383789
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 8,
+                        "pnl": -2639.0008790791035
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 7,
+                        "pnl": 1705.000295639038
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 6,
+                        "pnl": -1186.2493636459112
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 5,
+                        "pnl": 9285.250199139118
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 4,
+                        "pnl": -3089.0007112920284
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 3,
+                        "pnl": -3180.0019025802612
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 2,
+                        "pnl": -1391.0010365210474
+                    },
+                    {
+                        "strategy_id": 30443834,
+                        "run_counter": 1,
+                        "pnl": 5170.751000344753
+                    }
+                ],
+                "currency": "\u20b9 ",
+                "country": "IN",
+                "currency_code": "INR",
+                "all_pnl": 6486.498155128211,
+                "last_pnl": 2827.4998140335083,
+                "can_unblock": false,
+                "is_stockbag": false,
+                "exclude_booked_pnl": false,
+                "allow_execution": true,
+                "advanced_wizard_id": null,
+                "is_advanced_wizard": false,
+                "advanced_wizard": null
+            },
+            {
+                "created_at": "2026-07-15T02:58:07.000000Z",
+                "created_by_id": 692663,
+                "deployment_date": "2026-07-15T00:00:00.000000Z",
+                "deployment_type": "LIVE AUTO",
+                "id": 30484922,
+                "run_counter": 34,
+                "status": "Active",
+                "display_run_counter_pnl": true,
+                "sum_of_pnl": 2278.2500000000005,
+                "strategy_broker": {
+                    "id": 32120394,
+                    "exchange": "NFO",
+                    "broker": {
+                        "id": 361,
+                        "name": "FlatTrade"
+                    }
+                },
+                "strategy_template_id": 9491438,
+                "subscriber_id": 692663,
+                "user": {
+                    "id": 692663,
+                    "name": "Vaibhav Porwal"
+                },
+                "template": {
+                    "id": 9491438,
+                    "name": "part 3 Booster far otm hedge",
+                    "user": {
+                        "id": 2616805,
+                        "name": "Edgocity"
+                    },
+                    "created_by_id": 2616805,
+                    "strategy_params": "{\"PNL_buffer_for_entry\":\"( tt_Number ( '0.8' )  )\",\"HEDGES_AWAY_COUNT\":\"( tt_Number ( '14' )  )\",\"BX_weekday\":\"( tt_Number ( '1' )  )\",\"FN_weekday\":\"( tt_Number ( '2' )  )\",\"BN_weekday\":\"( tt_Number ( '3' )  )\",\"NF_weekday\":\"( tt_Number ( '4' )  )\",\"SX_weekday\":\"( tt_Number ( '5' )  )\",\"BX_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"FN_STRIKE_DIFF\":\"( tt_Number ( '50' )  )\",\"BN_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"NF_STRIKE_DIFF\":\"( tt_Number ( '50' )  )\",\"SX_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"status_1\":\"( tt_Number ( '0' )  )\",\"entry_time_1\":\"( tt_Number ( '918' )  )\",\"exit_time_1\":\"( tt_Number ( '1515' )  )\",\"last_entry_time_1\":\"( tt_Number ( '1500' )  )\",\"finally_enter_at_1\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_1\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_1\":\"( tt_Number ( '0' )  )\",\"pnl_1\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_1\":\"( tt_Number ( '1.5' )  )\",\"leg_target_per_1\":\"( tt_Number ( '0.2' )  )\",\"max_sl_1_base\":\"( tt_Number ( '-2000' )  )\",\"max_target_1_base\":\"( tt_Number ( '6000' )  )\",\"param_for_long_1\":\"( tt_Number ( '1' )  )\",\"param_for_super_long_1\":\"( tt_Number ( '3' )  )\",\"param_for_short_1\":\"( tt_Number ( '2' )  )\",\"param_for_super_short_1\":\"( tt_Number ( '4' )  )\",\"param_for_long_finally_1\":\"( tt_Number ( '1' )  )\",\"param_for_short_finally_1\":\"( tt_Number ( '3' )  )\",\"status_2\":\"( tt_Number ( '0' )  )\",\"status_3\":\"( tt_Number ( '0' )  )\",\"status_4\":\"( tt_Number ( '1111' )  )\",\"status_5\":\"( tt_Number ( '1111' )  )\",\"entry_time_2\":\"( tt_Number ( '1253' )  )\",\"entry_time_3\":\"( tt_Number ( '1401' )  )\",\"entry_time_4\":\"( tt_Number ( '1159' )  )\",\"entry_time_5\":\"( tt_Number ( '1419' )  )\",\"exit_time_2\":\"( tt_Number ( '1448' )  )\",\"exit_time_3\":\"( tt_Number ( '1528' )  )\",\"exit_time_4\":\"( tt_Number ( '1520' )  )\",\"exit_time_5\":\"( tt_Number ( '1524' )  )\",\"last_entry_time_2\":\"( tt_Number ( '1415' )  )\",\"last_entry_time_3\":\"( tt_Number ( '1511' )  )\",\"last_entry_time_4\":\"( tt_Number ( '1505' )  )\",\"last_entry_time_5\":\"( tt_Number ( '1510' )  )\",\"finally_enter_at_2\":\"( tt_Number ( '1600' )  )\",\"finally_enter_at_3\":\"( tt_Number ( '1600' )  )\",\"finally_enter_at_4\":\"( tt_Number ( '1600' )  )\",\"finally_enter_at_5\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_2\":\"( tt_Number ( '10' )  )\",\"REENTRY_COUNTS_3\":\"( tt_Number ( '10' )  )\",\"REENTRY_COUNTS_4\":\"( tt_Number ( '10' )  )\",\"REENTRY_COUNTS_5\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_2\":\"( tt_Number ( '1' )  )\",\"GO_ITM_COUNT_3\":\"( tt_Number ( '0' )  )\",\"GO_ITM_COUNT_4\":\"( tt_Number ( '0' )  )\",\"GO_ITM_COUNT_5\":\"( tt_Number ( '0' )  )\",\"pnl_2\":\"( tt_Number ( '0' )  )\",\"pnl_3\":\"( tt_Number ( '0' )  )\",\"pnl_4\":\"( tt_Number ( '0' )  )\",\"pnl_5\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_2\":\"( tt_Number ( '1.5' )  )\",\"leg_sl_per_3\":\"( tt_Number ( '1.5' )  )\",\"leg_sl_per_4\":\"( tt_Number ( '1.5' )  )\",\"leg_sl_per_5\":\"( tt_Number ( '1.5' )  )\",\"leg_target_per_2\":\"( tt_Number ( '0.2' )  )\",\"leg_target_per_3\":\"( tt_Number ( '0.2' )  )\",\"leg_target_per_4\":\"( tt_Number ( '0.2' )  )\",\"leg_target_per_5\":\"( tt_Number ( '0.2' )  )\",\"max_sl_2_base\":\"( tt_Number ( '-2000' )  )\",\"max_sl_3_base\":\"( tt_Number ( '-2000' )  )\",\"max_sl_4_base\":\"( tt_Number ( '-2000' )  )\",\"max_sl_5_base\":\"( tt_Number ( '-2000' )  )\",\"max_target_2_base\":\"( tt_Number ( '6000' )  )\",\"max_target_3_base\":\"( tt_Number ( '6000' )  )\",\"max_target_4_base\":\"( tt_Number ( '6000' )  )\",\"max_target_5_base\":\"( tt_Number ( '6000' )  )\",\"param_for_long_2\":\"( tt_Number ( '1' )  )\",\"param_for_long_3\":\"( tt_Number ( '1' )  )\",\"param_for_long_4\":\"( tt_Number ( '1' )  )\",\"param_for_long_5\":\"( tt_Number ( '1' )  )\",\"param_for_super_long_2\":\"( tt_Number ( '3' )  )\",\"param_for_super_long_3\":\"( tt_Number ( '3' )  )\",\"param_for_super_long_4\":\"( tt_Number ( '3' )  )\",\"param_for_super_long_5\":\"( tt_Number ( '3' )  )\",\"param_for_short_2\":\"( tt_Number ( '2' )  )\",\"param_for_short_3\":\"( tt_Number ( '2' )  )\",\"param_for_short_4\":\"( tt_Number ( '2' )  )\",\"param_for_short_5\":\"( tt_Number ( '2' )  )\",\"param_for_super_short_2\":\"( tt_Number ( '4' )  )\",\"param_for_super_short_3\":\"( tt_Number ( '4' )  )\",\"param_for_super_short_4\":\"( tt_Number ( '4' )  )\",\"param_for_super_short_5\":\"( tt_Number ( '4' )  )\",\"param_for_long_finally_2\":\"( tt_Number ( '1' )  )\",\"param_for_long_finally_3\":\"( tt_Number ( '1' )  )\",\"param_for_long_finally_4\":\"( tt_Number ( '1' )  )\",\"param_for_long_finally_5\":\"( tt_Number ( '1' )  )\",\"param_for_short_finally_2\":\"( tt_Number ( '3' )  )\",\"param_for_short_finally_3\":\"( tt_Number ( '3' )  )\",\"param_for_short_finally_4\":\"( tt_Number ( '3' )  )\",\"param_for_short_finally_5\":\"( tt_Number ( '3' )  )\",\"exit_1\":\"( tt_Number ( '0' )  )\",\"exit_2\":\"( tt_Number ( '0' )  )\",\"exit_3\":\"( tt_Number ( '0' )  )\",\"exit_4\":\"( tt_Number ( '0' )  )\",\"exit_5\":\"( tt_Number ( '0' )  )\",\"wat_1\":\"( tt_Number ( '1' )  )\",\"wat_2\":\"( tt_Number ( '1' )  )\",\"wat_3\":\"( tt_Number ( '1' )  )\",\"wat_4\":\"( tt_Number ( '1' )  )\",\"wat_5\":\"( tt_Number ( '1' )  )\",\"status_6\":\"( tt_Number ( '1111' )  )\",\"entry_time_6\":\"( tt_Number ( '0930' )  )\",\"exit_time_6\":\"( tt_Number ( '1515' )  )\",\"last_entry_time_6\":\"( tt_Number ( '1500' )  )\",\"finally_enter_at_6\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_6\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_6\":\"( tt_Number ( '0' )  )\",\"pnl_6\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_6\":\"( tt_Number ( '1.4' )  )\",\"leg_target_per_6\":\"( tt_Number ( '0.2' )  )\",\"max_sl_6_base\":\"( tt_Number ( '-1500' )  )\",\"max_target_6_base\":\"( tt_Number ( '5000' )  )\",\"exit_6\":\"( tt_Number ( '0' )  )\",\"pl_roll_strike_apart_by_ratio_6\":\"( tt_Number ( '1.3' )  )\",\"switched_to_monthly_BN\":\"( tt_Number ( '1' )  )\",\"switched_to_monthly_FN\":\"( tt_Number ( '1' )  )\",\"switched_to_monthly_BX\":\"( tt_Number ( '1' )  )\",\"trade_1dte_NF\":\"( tt_Number ( '1' )  )\",\"trade_2dte_NF\":\"( tt_Number ( '0' )  )\",\"trade_3dte_NF\":\"( tt_Number ( '0' )  )\",\"MANUAL_OVERRIDE\":\"( tt_Number ( '0' )  )\",\"manual_index_to_trade\":\"( tt_Number ( '99' )  )\",\"amount_multiplier_1\":\"( tt_Number ( '3' )  )\",\"amount_multiplier_2\":\"( tt_Number ( '1' )  )\",\"bypass_ltp_filter\":\"( tt_Number ( '0' )  )\",\"ltp_filter_ratio\":\"( tt_Number ( '0.05' )  )\",\"HEDGES_BELOW_NF\":\"( tt_Number ( '1' )  )\",\"HEDGES_BELOW_SX\":\"( tt_Number ( '3.2' )  )\",\"HEDGES_BELOW_BX\":\"( tt_Number ( '2.5' )  )\",\"HEDGES_BELOW_BN\":\"( tt_Number ( '2' )  )\",\"HEDGES_BELOW_FN\":\"( tt_Number ( '0.9' )  )\"}",
+                    "min_multiple": 1,
+                    "capital_required": 390000,
+                    "variable_fee": "10.00",
+                    "display_positions_to_non_subscribers": 0,
+                    "profile": {
+                        "id": 9395462,
+                        "strategy_template_id": 9491438,
+                        "exchanges_data": "NFO,BFO",
+                        "deployed_display_type": 1,
+                        "max_multiple": 100,
+                        "country": "IN",
+                        "currency_code": "INR"
+                    }
+                },
+                "user_notes": "",
+                "calculated_positions": [
+                    {
+                        "strategy_id": 30484922,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_24400",
+                        "quantity": 0,
+                        "price": 0.15,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:41",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 5.1351382550971095e-05,
+                        "delta": 0.00503674150181888,
+                        "iv": 90.46320540896374,
+                        "vega": 0.045599564792933665,
+                        "theta": -32.21905203497603,
+                        "pnl": -78,
+                        "exp": 0,
+                        "entry_value": 78
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23700",
+                        "quantity": 0,
+                        "price": 16.55,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:41",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0006659823068605839,
+                        "delta": 0.0060453978545367115,
+                        "iv": 55.51482402560547,
+                        "vega": 0.00792458148653511,
+                        "theta": -157.06654097113815,
+                        "pnl": 2200.25,
+                        "exp": 0,
+                        "entry_value": -2200.25
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23600",
+                        "quantity": 0,
+                        "price": 79.65,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:18:00",
+                        "expired": "no",
+                        "ltp": 35,
+                        "gamma": 0,
+                        "delta": 1,
+                        "iv": 0,
+                        "vega": 0,
+                        "theta": 0,
+                        "pnl": 162.5,
+                        "exp": 0,
+                        "entry_value": -162.5
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_24300",
+                        "quantity": 0,
+                        "price": 0.2,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:40:27",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 5.178783253284666e-05,
+                        "delta": 0.004122399659449525,
+                        "iv": 89.18212696652284,
+                        "vega": 0.03207377892592025,
+                        "theta": -31.61156766871334,
+                        "pnl": -19.5,
+                        "exp": 0,
+                        "entry_value": 19.5
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23650",
+                        "quantity": 0,
+                        "price": 34.65,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:41",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0065057340231746965,
+                        "delta": 0.019119745086415504,
+                        "iv": 30.5685122165202,
+                        "vega": 0.010920497366464223,
+                        "theta": -465.19900094169975,
+                        "pnl": 13.000000000000455,
+                        "exp": 0,
+                        "entry_value": -13
+                    }
+                ],
+                "max_run_counter": 33,
+                "has_zero_quantity": null,
+                "local": 3,
+                "blocked_term": null,
+                "minimum_multiple": 1,
+                "deployed_display_type": 1,
+                "max_multiple": 100,
+                "exchange": "NFO,BFO",
+                "market_open": null,
+                "is_blur": false,
+                "globalPt": null,
+                "ltp_precision": 2,
+                "access_level": "Write",
+                "exit_on_error": 0,
+                "stockbag": null,
+                "strategyExtra": {
+                    "id": 8833850,
+                    "strategy_id": 30484922,
+                    "exclude_booked_pnl": 0,
+                    "is_broker_sponsored": 0
+                },
+                "can_change_broker": true,
+                "filtered_run_counter": [
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 33,
+                        "pnl": 2278.249951377511
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 32,
+                        "pnl": 1855.7495474815369
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 31,
+                        "pnl": 3597.999620437622
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 30,
+                        "pnl": -1794.9996376037598
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 29,
+                        "pnl": -2720.2498058974743
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 28,
+                        "pnl": -5294.251397848129
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 27,
+                        "pnl": 3611.9999504089355
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 26,
+                        "pnl": 632.000617980957
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 25,
+                        "pnl": -8020.499682426453
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 24,
+                        "pnl": 3145.499882698059
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 23,
+                        "pnl": -1863.9996963739395
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 22,
+                        "pnl": 2405.999698638916
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 21,
+                        "pnl": -2369.249990750104
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 20,
+                        "pnl": -2479.74979698658
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 19,
+                        "pnl": 3369.000020325184
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 18,
+                        "pnl": -6092.999610900879
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 17,
+                        "pnl": 3526.8999015539885
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 16,
+                        "pnl": 2830.7500937581062
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 15,
+                        "pnl": -1076.0000729560852
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 14,
+                        "pnl": 883.9994049072266
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 13,
+                        "pnl": -9873.499750494957
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 12,
+                        "pnl": 728.0003130435944
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 11,
+                        "pnl": -569.0002659708261
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 9,
+                        "pnl": 525.9998893737793
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 8,
+                        "pnl": 3019.500078856945
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 7,
+                        "pnl": 1875.0004577636719
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 6,
+                        "pnl": -1193.0001731216908
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 5,
+                        "pnl": -4091.999797821045
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 4,
+                        "pnl": -2882.749955058098
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 3,
+                        "pnl": 6727.500278949738
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 2,
+                        "pnl": 5044.00012768805
+                    },
+                    {
+                        "strategy_id": 30484922,
+                        "run_counter": 1,
+                        "pnl": -1990.0006484985352
+                    }
+                ],
+                "currency": "\u20b9 ",
+                "country": "IN",
+                "currency_code": "INR",
+                "all_pnl": -6254.100447464734,
+                "last_pnl": 1855.7495474815369,
+                "can_unblock": false,
+                "is_stockbag": false,
+                "exclude_booked_pnl": false,
+                "allow_execution": true,
+                "advanced_wizard_id": null,
+                "is_advanced_wizard": false,
+                "advanced_wizard": null
+            },
+            {
+                "created_at": "2026-07-15T02:58:17.000000Z",
+                "created_by_id": 692663,
+                "deployment_date": "2026-07-15T00:00:00.000000Z",
+                "deployment_type": "LIVE AUTO",
+                "id": 30484938,
+                "run_counter": 36,
+                "status": "Active",
+                "display_run_counter_pnl": true,
+                "sum_of_pnl": -3701.75,
+                "strategy_broker": {
+                    "id": 32120414,
+                    "exchange": "NFO",
+                    "broker": {
+                        "id": 361,
+                        "name": "FlatTrade"
+                    }
+                },
+                "strategy_template_id": 9491442,
+                "subscriber_id": 692663,
+                "user": {
+                    "id": 692663,
+                    "name": "Vaibhav Porwal"
+                },
+                "template": {
+                    "id": 9491442,
+                    "name": "part 4 far otm hedge",
+                    "user": {
+                        "id": 2616805,
+                        "name": "Edgocity"
+                    },
+                    "created_by_id": 2616805,
+                    "strategy_params": "{\"PNL_buffer_for_entry\":\"( tt_Number ( '0.8' )  )\",\"HEDGES_AWAY_COUNT\":\"( tt_Number ( '14' )  )\",\"BX_weekday\":\"( tt_Number ( '1' )  )\",\"FN_weekday\":\"( tt_Number ( '2' )  )\",\"BN_weekday\":\"( tt_Number ( '3' )  )\",\"NF_weekday\":\"( tt_Number ( '4' )  )\",\"SX_weekday\":\"( tt_Number ( '5' )  )\",\"BX_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"FN_STRIKE_DIFF\":\"( tt_Number ( '50' )  )\",\"BN_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"NF_STRIKE_DIFF\":\"( tt_Number ( '50' )  )\",\"SX_STRIKE_DIFF\":\"( tt_Number ( '100' )  )\",\"status_6\":\"( tt_Number ( '0' )  )\",\"entry_time_6\":\"( tt_Number ( '917' )  )\",\"exit_time_6\":\"( tt_Number ( '1515' )  )\",\"last_entry_time_6\":\"( tt_Number ( '1500' )  )\",\"finally_enter_at_6\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_6\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_6\":\"( tt_Number ( '0' )  )\",\"pnl_6\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_6\":\"( tt_Number ( '1.6' )  )\",\"leg_target_per_6\":\"( tt_Number ( '0.2' )  )\",\"max_sl_6_base\":\"( tt_Number ( '-2200' )  )\",\"max_target_6_base\":\"( tt_Number ( '3500' )  )\",\"exit_6\":\"( tt_Number ( '0' )  )\",\"status_7\":\"( tt_Number ( '0' )  )\",\"entry_time_7\":\"( tt_Number ( '0930' )  )\",\"exit_time_7\":\"( tt_Number ( '1454' )  )\",\"last_entry_time_7\":\"( tt_Number ( '1500' )  )\",\"finally_enter_at_7\":\"( tt_Number ( '1600' )  )\",\"REENTRY_COUNTS_7\":\"( tt_Number ( '10' )  )\",\"GO_ITM_COUNT_7\":\"( tt_Number ( '0' )  )\",\"pnl_7\":\"( tt_Number ( '0' )  )\",\"leg_sl_per_7\":\"( tt_Number ( '1.3' )  )\",\"leg_target_per_7\":\"( tt_Number ( '0.2' )  )\",\"max_sl_7_base\":\"( tt_Number ( '-2200' )  )\",\"max_target_7_base\":\"( tt_Number ( '3500' )  )\",\"exit_7\":\"( tt_Number ( '0' )  )\",\"switched_to_monthly_BN\":\"( tt_Number ( '1' )  )\",\"switched_to_monthly_FN\":\"( tt_Number ( '1' )  )\",\"switched_to_monthly_BX\":\"( tt_Number ( '1' )  )\",\"trade_1dte_NF\":\"( tt_Number ( '1' )  )\",\"trade_2dte_NF\":\"( tt_Number ( '0' )  )\",\"trade_3dte_NF\":\"( tt_Number ( '0' )  )\",\"MANUAL_OVERRIDE\":\"( tt_Number ( '0' )  )\",\"manual_index_to_trade\":\"( tt_Number ( '99' )  )\",\"amount_multiplier_1\":\"( tt_Number ( '3' )  )\",\"amount_multiplier_2\":\"( tt_Number ( '1' )  )\",\"bypass_ltp_filter\":\"( tt_Number ( '0' )  )\",\"ltp_filter_ratio\":\"( tt_Number ( '0.05' )  )\",\"HEDGES_BELOW_NF\":\"( tt_Number ( '1' )  )\",\"HEDGES_BELOW_SX\":\"( tt_Number ( '3.2' )  )\",\"HEDGES_BELOW_BX\":\"( tt_Number ( '2.5' )  )\",\"HEDGES_BELOW_BN\":\"( tt_Number ( '2' )  )\",\"HEDGES_BELOW_FN\":\"( tt_Number ( '0.9' )  )\"}",
+                    "min_multiple": 1,
+                    "capital_required": 510000,
+                    "variable_fee": "10.00",
+                    "display_positions_to_non_subscribers": 0,
+                    "profile": {
+                        "id": 9395466,
+                        "strategy_template_id": 9491442,
+                        "exchanges_data": "NFO,BFO",
+                        "deployed_display_type": 1,
+                        "max_multiple": 100,
+                        "country": "IN",
+                        "currency_code": "INR"
+                    }
+                },
+                "user_notes": "",
+                "calculated_positions": [
+                    {
+                        "strategy_id": 30484938,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_24400",
+                        "quantity": 0,
+                        "price": 0.15,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:01",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 5.1351382550971095e-05,
+                        "delta": 0.00503674150181888,
+                        "iv": 90.46320540896374,
+                        "vega": 0.045599564792933665,
+                        "theta": -32.21905203497603,
+                        "pnl": -110.5,
+                        "exp": 0,
+                        "entry_value": 110.5
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23300",
+                        "quantity": 0,
+                        "price": 0.55,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:01",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 8.294058554962939e-05,
+                        "delta": -0.002999156505059369,
+                        "iv": 90.43263429260168,
+                        "vega": 0.011154575643212164,
+                        "theta": -51.75471128828072,
+                        "pnl": -61.75,
+                        "exp": 0,
+                        "entry_value": 61.75
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23700",
+                        "quantity": 0,
+                        "price": 20.5,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 08:35:02",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0006659823068605839,
+                        "delta": 0.0060453978545367115,
+                        "iv": 55.51482402560547,
+                        "vega": 0.00792458148653511,
+                        "theta": -157.06654097113815,
+                        "pnl": 1969.5,
+                        "exp": 0,
+                        "entry_value": -1969.5
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23700",
+                        "quantity": 0,
+                        "price": 75.55,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 08:21:38",
+                        "expired": "no",
+                        "ltp": 64.75,
+                        "gamma": 0,
+                        "delta": -1,
+                        "iv": 0,
+                        "vega": 0,
+                        "theta": 0,
+                        "pnl": -1836.25,
+                        "exp": 0,
+                        "entry_value": 1836.25
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_CE_23650",
+                        "quantity": 0,
+                        "price": 33.55,
+                        "underlying": "NIFTY 50",
+                        "option_type": "CE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:01",
+                        "expired": "no",
+                        "ltp": 0.05,
+                        "gamma": 0.0065057340231746965,
+                        "delta": 0.019119745086415504,
+                        "iv": 30.5685122165202,
+                        "vega": 0.010920497366464223,
+                        "theta": -465.19900094169975,
+                        "pnl": -858,
+                        "exp": 0,
+                        "entry_value": 858
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "Instrument": "OPTIDX_NIFTY_08SEP2026_PE_23650",
+                        "quantity": 0,
+                        "price": 46.25,
+                        "underlying": "NIFTY 50",
+                        "option_type": "PE",
+                        "exchange": "NFO",
+                        "entry_date": "2026-09-08 09:44:01",
+                        "expired": "no",
+                        "ltp": 14.85,
+                        "gamma": 0.011875009298687919,
+                        "delta": -0.9474474540319477,
+                        "iv": 37.37337762639423,
+                        "vega": 0.02594344924550501,
+                        "theta": -1269.287117127427,
+                        "pnl": -2804.75,
+                        "exp": 0,
+                        "entry_value": 2804.75
+                    }
+                ],
+                "max_run_counter": 35,
+                "has_zero_quantity": null,
+                "local": 3,
+                "blocked_term": null,
+                "minimum_multiple": 1,
+                "deployed_display_type": 1,
+                "max_multiple": 100,
+                "exchange": "NFO,BFO",
+                "market_open": null,
+                "is_blur": false,
+                "globalPt": null,
+                "ltp_precision": 2,
+                "access_level": "Write",
+                "exit_on_error": 0,
+                "stockbag": null,
+                "strategyExtra": {
+                    "id": 8833854,
+                    "strategy_id": 30484938,
+                    "exclude_booked_pnl": 0,
+                    "is_broker_sponsored": 0
+                },
+                "can_change_broker": true,
+                "filtered_run_counter": [
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 35,
+                        "pnl": -3701.749941110611
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 34,
+                        "pnl": 367.2500991821289
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 33,
+                        "pnl": -3420.00027179718
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 32,
+                        "pnl": 1646.999659538269
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 31,
+                        "pnl": 194.9998179078102
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 30,
+                        "pnl": 1290.2502998709679
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 28,
+                        "pnl": -5304.001233577728
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 27,
+                        "pnl": -24.000566005706787
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 26,
+                        "pnl": 948.9996337890625
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 25,
+                        "pnl": -2361.000416278839
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 24,
+                        "pnl": 4171.499955654144
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 23,
+                        "pnl": 2474.999965429306
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 22,
+                        "pnl": -3505.9998178482056
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 21,
+                        "pnl": 1114.75017497316
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 20,
+                        "pnl": -484.2501851916313
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 19,
+                        "pnl": 3390.000258088112
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 18,
+                        "pnl": 3189.9997520446777
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 17,
+                        "pnl": 10458.500054627657
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 16,
+                        "pnl": 4634.499307274818
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 15,
+                        "pnl": -1916.000702381134
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 14,
+                        "pnl": -4232.999639511108
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 13,
+                        "pnl": -6759.9993408843875
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 12,
+                        "pnl": 1540.5004021525383
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 11,
+                        "pnl": -1355.999542400241
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 9,
+                        "pnl": -687.0004916191101
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 8,
+                        "pnl": 2382.000168710947
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 7,
+                        "pnl": -2477.9987955093384
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 6,
+                        "pnl": 800.0000029802322
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 5,
+                        "pnl": -4588.998963832855
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 4,
+                        "pnl": -3487.250879369676
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 3,
+                        "pnl": 5170.75010150671
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 2,
+                        "pnl": -1257.9997538030148
+                    },
+                    {
+                        "strategy_id": 30484938,
+                        "run_counter": 1,
+                        "pnl": 357.0005512237549
+                    }
+                ],
+                "currency": "\u20b9 ",
+                "country": "IN",
+                "currency_code": "INR",
+                "all_pnl": -1432.2503361664712,
+                "last_pnl": 367.2500991821289,
+                "can_unblock": false,
+                "is_stockbag": false,
+                "exclude_booked_pnl": false,
+                "allow_execution": true,
+                "advanced_wizard_id": null,
+                "is_advanced_wizard": false,
+                "advanced_wizard": null
+            },
+            {
+                "created_at": "2026-07-22T09:58:37.000000Z",
+                "created_by_id": 692663,
+                "deployment_date": "2026-07-22T00:00:00.000000Z",
+                "deployment_type": "LIVE AUTO",
+                "id": 30599410,
+                "run_counter": 33,
+                "status": "Exited",
+                "display_run_counter_pnl": true,
+                "sum_of_pnl": 3020.0019999999995,
+                "strategy_broker": {
+                    "id": 32246414,
+                    "exchange": "MCX",
+                    "broker": {
+                        "id": 361,
+                        "name": "FlatTrade"
+                    }
+                },
+                "strategy_template_id": 6717506,
+                "subscriber_id": 692663,
+                "user": {
+                    "id": 692663,
+                    "name": "Vaibhav Porwal"
+                },
+                "template": {
+                    "id": 6717506,
+                    "name": "Crude Sureshot Earner",
+                    "user": {
+                        "id": 198435,
+                        "name": "Market Star"
+                    },
+                    "created_by_id": 198435,
+                    "strategy_params": "{\"ce_short\":\"( tt_Number ( '1' )  )\",\"pe_short\":\"( tt_Number ( '1' )  )\",\"HDIST\":\"( tt_Number ( '500' )  )\",\"NPEH\":\"( tt_Number ( '1' )  )\",\"NCEH\":\"( tt_Number ( '1' )  )\",\"LEGSL\":\"( tt_Number ( '1.15' )  )\"}",
+                    "min_multiple": 1,
+                    "capital_required": 600000,
+                    "variable_fee": "6.00",
+                    "display_positions_to_non_subscribers": 0,
+                    "profile": {
+                        "id": 6635210,
+                        "strategy_template_id": 6717506,
+                        "exchanges_data": "MCX",
+                        "deployed_display_type": 1,
+                        "max_multiple": 100,
+                        "country": "IN",
+                        "currency_code": "INR"
+                    }
+                },
+                "user_notes": "",
+                "calculated_positions": [
+                    {
+                        "strategy_id": 30599410,
+                        "Instrument": "OPTCOM_CRUDEOIL_17SEP2026_CE_9000",
+                        "quantity": 0,
+                        "price": 193.5,
+                        "underlying": "Crudeoil",
+                        "option_type": "CE",
+                        "exchange": "MCX",
+                        "entry_date": "2026-09-08 12:43:16",
+                        "expired": "no",
+                        "ltp": 161.9,
+                        "gamma": 0.0005518826733560904,
+                        "delta": 0.36347874505443606,
+                        "iv": 49.60176735261036,
+                        "vega": 5.14665998557741,
+                        "theta": -14.182266938992791,
+                        "pnl": 6299.999999999999,
+                        "exp": 0,
+                        "entry_value": -6300
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "Instrument": "OPTCOM_CRUDEOIL_17SEP2026_PE_8800",
+                        "quantity": 0,
+                        "price": 302.70001,
+                        "underlying": "Crudeoil",
+                        "option_type": "PE",
+                        "exchange": "MCX",
+                        "entry_date": "2026-09-08 16:05:41",
+                        "expired": "no",
+                        "ltp": 298.2,
+                        "gamma": 0.0006065146768116732,
+                        "delta": -0.5261596107170242,
+                        "iv": 47.86792757684399,
+                        "vega": 5.4583848893513025,
+                        "theta": -14.515605586179479,
+                        "pnl": -13840.002000000004,
+                        "exp": 0,
+                        "entry_value": 13840.002000000008
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "Instrument": "OPTCOM_CRUDEOIL_17SEP2026_CE_8800",
+                        "quantity": 0,
+                        "price": 229.39999,
+                        "underlying": "Crudeoil",
+                        "option_type": "CE",
+                        "exchange": "MCX",
+                        "entry_date": "2026-09-08 17:15:00",
+                        "expired": "no",
+                        "ltp": 239.5,
+                        "gamma": 0.000585852434234076,
+                        "delta": 0.4757849662386681,
+                        "iv": 49.571459815232124,
+                        "vega": 5.460069406493819,
+                        "theta": -15.036828612384104,
+                        "pnl": 10560.004000000004,
+                        "exp": 0,
+                        "entry_value": -10560.004000000008
+                    }
+                ],
+                "max_run_counter": 33,
+                "has_zero_quantity": null,
+                "local": 3,
+                "blocked_term": null,
+                "minimum_multiple": 2,
+                "deployed_display_type": 1,
+                "max_multiple": 100,
+                "exchange": "MCX",
+                "market_open": null,
+                "is_blur": false,
+                "globalPt": null,
+                "ltp_precision": 2,
+                "access_level": "Write",
+                "exit_on_error": 0,
+                "stockbag": null,
+                "strategyExtra": {
+                    "id": 8732038,
+                    "strategy_id": 30599410,
+                    "exclude_booked_pnl": 0,
+                    "is_broker_sponsored": 0
+                },
+                "can_change_broker": true,
+                "filtered_run_counter": [
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 33,
+                        "pnl": 3020.001220703125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 32,
+                        "pnl": 2750
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 31,
+                        "pnl": 4420.001220703125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 30,
+                        "pnl": 2680.0048828125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 29,
+                        "pnl": 4000
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 28,
+                        "pnl": -3240.00244140625
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 27,
+                        "pnl": 4550.0030517578125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 26,
+                        "pnl": 4390.00244140625
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 25,
+                        "pnl": 1760.0006103515625
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 24,
+                        "pnl": -1469.9951171875
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 23,
+                        "pnl": -139.996337890625
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 22,
+                        "pnl": 4039.9993896484375
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 21,
+                        "pnl": 3039.999771118164
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 20,
+                        "pnl": -39.99977111816406
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 19,
+                        "pnl": -2530.0003051757812
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 18,
+                        "pnl": -310.0006103515625
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 17,
+                        "pnl": -1060.0006103515625
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 16,
+                        "pnl": -1390.00244140625
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 15,
+                        "pnl": 2939.9993896484375
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 14,
+                        "pnl": -1980.0018310546875
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 13,
+                        "pnl": -4259.99755859375
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 12,
+                        "pnl": 600.0030517578125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 11,
+                        "pnl": -650.0030517578125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 10,
+                        "pnl": 680.0018310546875
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 9,
+                        "pnl": 2839.9993896484375
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 8,
+                        "pnl": 1170.001220703125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 7,
+                        "pnl": -4100
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 6,
+                        "pnl": -870.001220703125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 5,
+                        "pnl": 69.9981689453125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 4,
+                        "pnl": 1779.9957275390625
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 3,
+                        "pnl": -2220.001220703125
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 2,
+                        "pnl": 0
+                    },
+                    {
+                        "strategy_id": 30599410,
+                        "run_counter": 1,
+                        "pnl": 300
+                    }
+                ],
+                "currency": "\u20b9 ",
+                "country": "IN",
+                "currency_code": "INR",
+                "all_pnl": 20770.008850097656,
+                "last_pnl": 2750,
+                "can_unblock": false,
+                "is_stockbag": false,
+                "exclude_booked_pnl": false,
+                "allow_execution": true,
+                "advanced_wizard_id": null,
+                "is_advanced_wizard": false,
+                "advanced_wizard": null
+            },
+            {
+                "created_at": "2026-07-27T03:17:39.000000Z",
+                "created_by_id": 692663,
+                "deployment_date": "2026-07-27T00:00:00.000000Z",
+                "deployment_type": "LIVE AUTO",
+                "id": 30652690,
+                "run_counter": 28,
+                "status": "Exited",
+                "display_run_counter_pnl": true,
+                "sum_of_pnl": 1060.0020000000022,
+                "strategy_broker": {
+                    "id": 32305302,
+                    "exchange": "MCX",
+                    "broker": {
+                        "id": 361,
+                        "name": "FlatTrade"
+                    }
+                },
+                "strategy_template_id": 2708439,
+                "subscriber_id": 692663,
+                "user": {
+                    "id": 692663,
+                    "name": "Vaibhav Porwal"
+                },
+                "template": {
+                    "id": 2708439,
+                    "name": "Crude Hybrid",
+                    "user": {
+                        "id": 198435,
+                        "name": "Market Star"
+                    },
+                    "created_by_id": 198435,
+                    "strategy_params": "{\"HDIST\":\"( tt_Number ( '500' )  )\",\"NPEH\":\"( tt_Number ( '1' )  )\",\"NCEH\":\"( tt_Number ( '1' )  )\"}",
+                    "min_multiple": 1,
+                    "capital_required": 1200000,
+                    "variable_fee": "6.00",
+                    "display_positions_to_non_subscribers": 0,
+                    "profile": {
+                        "id": 2632246,
+                        "strategy_template_id": 2708439,
+                        "exchanges_data": "MCX",
+                        "deployed_display_type": 1,
+                        "max_multiple": 20,
+                        "country": "IN",
+                        "currency_code": "INR"
+                    }
+                },
+                "user_notes": "",
+                "calculated_positions": [
+                    {
+                        "strategy_id": 30652690,
+                        "Instrument": "OPTCOM_CRUDEOIL_17SEP2026_CE_8900",
+                        "quantity": 0,
+                        "price": 190.8,
+                        "underlying": "Crudeoil",
+                        "option_type": "CE",
+                        "exchange": "MCX",
+                        "entry_date": "2026-09-08 17:24:00",
+                        "expired": "no",
+                        "ltp": 270.7,
+                        "gamma": 0.0005825986955639624,
+                        "delta": 0.4168035539365357,
+                        "iv": 48.850468871292215,
+                        "vega": 5.350758418412462,
+                        "theta": -14.521503197581264,
+                        "pnl": 14580.000999999998,
+                        "exp": 0,
+                        "entry_value": -14580.001000000004
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "Instrument": "OPTCOM_CRUDEOIL_17SEP2026_PE_8900",
+                        "quantity": 0,
+                        "price": 362.5,
+                        "underlying": "Crudeoil",
+                        "option_type": "PE",
+                        "exchange": "MCX",
+                        "entry_date": "2026-09-08 17:24:00",
+                        "expired": "no",
+                        "ltp": 362,
+                        "gamma": 0.0005825986955639617,
+                        "delta": -0.5831964460634642,
+                        "iv": 48.85037463840739,
+                        "vega": 5.350768740081556,
+                        "theta": -14.521447173479531,
+                        "pnl": -13519.998999999996,
+                        "exp": 0,
+                        "entry_value": 13519.998999999989
+                    }
+                ],
+                "max_run_counter": 28,
+                "has_zero_quantity": null,
+                "local": 3,
+                "blocked_term": null,
+                "minimum_multiple": 1,
+                "deployed_display_type": 1,
+                "max_multiple": 20,
+                "exchange": "MCX",
+                "market_open": null,
+                "is_blur": false,
+                "globalPt": null,
+                "ltp_precision": 2,
+                "access_level": "Write",
+                "exit_on_error": 0,
+                "stockbag": null,
+                "strategyExtra": {
+                    "id": 8787886,
+                    "strategy_id": 30652690,
+                    "exclude_booked_pnl": 0,
+                    "is_broker_sponsored": 0
+                },
+                "can_change_broker": true,
+                "filtered_run_counter": [
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 28,
+                        "pnl": 1060.0021362304688
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 27,
+                        "pnl": 179.99725341796875
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 26,
+                        "pnl": 4729.998779296875
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 25,
+                        "pnl": 4759.9945068359375
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 24,
+                        "pnl": 1179.998779296875
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 23,
+                        "pnl": -4889.990234375
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 22,
+                        "pnl": 5350.0030517578125
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 21,
+                        "pnl": 5209.9945068359375
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 20,
+                        "pnl": 5229.998779296875
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 19,
+                        "pnl": -2939.996337890625
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 18,
+                        "pnl": -1719.9981689453125
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 17,
+                        "pnl": 5800
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 16,
+                        "pnl": 5900.000381469727
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 15,
+                        "pnl": 4699.999237060547
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 14,
+                        "pnl": -4769.9981689453125
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 13,
+                        "pnl": 4700
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 12,
+                        "pnl": -5049.9969482421875
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 11,
+                        "pnl": 60.0006103515625
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 10,
+                        "pnl": 4800
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 9,
+                        "pnl": -5030.000305175781
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 8,
+                        "pnl": 4980.0018310546875
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 7,
+                        "pnl": -4500.0030517578125
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 6,
+                        "pnl": -829.998779296875
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 5,
+                        "pnl": 3310.0006103515625
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 4,
+                        "pnl": 1199.9969482421875
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 3,
+                        "pnl": 6119.9951171875
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 2,
+                        "pnl": 5310.003662109375
+                    },
+                    {
+                        "strategy_id": 30652690,
+                        "run_counter": 1,
+                        "pnl": 0
+                    }
+                ],
+                "currency": "\u20b9 ",
+                "country": "IN",
+                "currency_code": "INR",
+                "all_pnl": 44850.00419616699,
+                "last_pnl": 179.99725341796875,
+                "can_unblock": false,
+                "is_stockbag": false,
+                "exclude_booked_pnl": false,
+                "allow_execution": true,
+                "advanced_wizard_id": null,
+                "is_advanced_wizard": false,
+                "advanced_wizard": null
+            },
             {
                 "created_at": "2026-08-10T13:23:19.000000Z",
                 "created_by_id": 692663,
@@ -1860,8 +4022,8 @@
         "paginate": {
             "current_page": 1,
             "last_page": 1,
-            "per_page": "15",
-            "total": 9
+            "per_page": 20,
+            "total": 15
         }
     }
 }
