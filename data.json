@@ -1,1 +1,1 @@
-{"error": "Timeout 60000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard*\" until 'load'\n============================================================", "url": "https://tradetron.tech/login"}
+{"error": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://tradetron.tech/login\", waiting until \"load\"\n", "url": "https://tradetron.tech/login"}
