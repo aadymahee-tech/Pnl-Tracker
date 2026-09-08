@@ -2,11 +2,11 @@ name: Tradetron Live Pulse
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Runs every 10 minutes
-  workflow_dispatch:      # Allows manual trigger
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
 
 permissions:
-  contents: write         # Allows the bot to save files back to GitHub
+  contents: write
 
 jobs:
   build:
@@ -35,12 +35,6 @@ jobs:
         run: |
           git config --global user.name "Robot-Secretary"
           git config --global user.email "bot@github.com"
-          # This line adds both the data and the debug image to your repo
-                - name: Commit and Push Data
-        run: |
-          git config --global user.name "Robot-Secretary"
-          git config --global user.email "bot@github.com"
-          # This line saves everything (data + screenshots) to your repo
           git add data.json debug.png before_click.png || exit 0
           git commit -m "Update Live P&L: $(date)" || exit 0
           git push
