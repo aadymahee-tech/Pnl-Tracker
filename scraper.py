@@ -5,7 +5,6 @@ from playwright.sync_api import sync_playwright
 
 def run_scraper():
     with sync_playwright() as p:
-        # Standard Desktop browser for best compatibility
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(viewport={'width': 1280, 'height': 1000})
         page = context.new_page()
@@ -13,77 +12,73 @@ def run_scraper():
         try:
             print("Step 1: Navigating to Tradetron...")
             page.goto("https://tradetron.tech/login", timeout=60000)
-            time.sleep(5)
+            time.sleep(3)
 
             print("Step 2: Entering Credentials...")
             page.fill("input[name='email']", os.environ.get("TT_EMAIL").strip())
             page.fill("input[name='password']", os.environ.get("TT_PASSWORD").strip())
             
-            # --- ALTCHA HANDSHAKE ---
-            print("Step 3: Handling ALTCHA (The Robot Check)...")
+            # --- WORKING LOGIN HANDSHAKE ---
             try:
-                # 1. Find the checkbox inside the altcha-widget and click it
-                # We wait for the 'I'm not a robot' text area to be clickable
-                page.click("altcha-widget", position={"x": 20, "y": 20}) 
-                print("SUCCESS: Clicked the verification box.")
-                
-                # 2. WAIT for the verification to complete
-                # ALTCHA math takes time. We wait for the hidden field to get its 'Proof' token.
-                print("Waiting for computer to finish math (Proof-of-Work)...")
-                page.wait_for_function(
-                    "() => document.querySelector('input[name=\"altcha\"]').value.length > 20",
-                    timeout=30000
-                )
-                print("SUCCESS: Human verification verified!")
-                
-            except Exception as e:
-                print(f"ALTCHA NOTE: {str(e)} (Proceeding anyway...)")
+                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=5000)
+                print("Clicked Altcha. Waiting for math...")
+                time.sleep(10) # Time for math to finish
+            except: pass
 
-            print("Step 4: Clicking Sign In...")
-            # We use a slight delay before clicking to ensure Tradetron's server is ready
-            time.sleep(2)
+            print("Clicking Sign In...")
             page.click("button[type='submit']", force=True)
             
-            print("Step 5: Waiting for Dashboard (Redirect)...")
-            # Wait until the URL changes to something that isn't 'login'
-            page.wait_for_url("**/dashboard**", timeout=45000)
+            # Wait for dashboard using a simpler pattern
+            page.wait_for_url("**/dashboard", timeout=45000)
             print(f"LOGIN SUCCESS! Landed on: {page.url}")
 
-            # Now go to the data page
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle")
-            time.sleep(5)
+            # --- NAVIGATION TO DATA ---
+            print("Step 3: Moving to Deployed Strategies...")
+            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle", timeout=60000)
+            
+            print("Waiting for strategy cards to appear...")
+            # We wait for the 'by' keyword which always exists near the strategy name
+            page.wait_for_selector("text='by'", timeout=30000)
+            time.sleep(8) # Final buffer for P&L numbers to load/pulse
 
-            # --- EXTRACTION ---
-            print("Step 6: Capturing P&L Data...")
+            # --- DATA CAPTURE ---
+            print("Step 4: Scoping P&L values...")
             strategies = page.evaluate("""() => {
                 let data = [];
-                document.querySelectorAll('.deployed-strategy-block, tr, .strategy-card').forEach(el => {
+                // Omni-Scraper logic: find any block with a name and a currency symbol
+                document.querySelectorAll('div, tr, section').forEach(el => {
                     let txt = el.innerText;
-                    if (txt.includes('by ') && (txt.includes('₹') || txt.includes('Rs.'))) {
-                        let name = txt.split('\\n')[0].trim();
-                        let pnl = 0.0;
-                        let matches = txt.match(/[₹Rs\\.]\\s?([+-]?[\\d,]+\\.?\\d*)/gi);
-                        if (matches) {
-                            let val = matches[matches.length - 1].replace(/[₹Rs\\.\\s,]/gi, '');
-                            pnl = parseFloat(val) || 0.0;
+                    if (txt.includes('by ') && (txt.includes('₹') || txt.includes('Rs.')) && txt.length < 500 && txt.length > 40) {
+                        let lines = txt.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
+                        let name = lines[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
+                        
+                        let pnlMatches = txt.match(/[₹Rs\\.]\\s?([+-]?[\\d,]+\\.?\\d*)/gi);
+                        if (pnlMatches) {
+                            let val = pnlMatches[pnlMatches.length - 1].replace(/[₹Rs\\.\\s,]/gi, '');
+                            let pnl = parseFloat(val) || 0.0;
                             if (txt.toUpperCase().includes('K')) pnl *= 1000;
                             if (txt.toUpperCase().includes('L')) pnl *= 100000;
-                            if (matches[matches.length - 1].includes('-')) pnl *= -1;
+                            // Check if the number was red/negative
+                            if (pnlMatches[pnlMatches.length - 1].includes('-') || txt.includes('-₹') || txt.includes('-Rs')) {
+                                if (pnl > 0) pnl *= -1;
+                            }
+                            data.push({ name, pnl });
                         }
-                        data.push({ name, pnl });
                     }
                 });
-                return data;
+                // Unique by name to prevent double counting
+                return [...new Map(data.map(i => [i.name, i])).values()];
             }""")
 
-            print(f"Step 7: Captured {len(strategies)} strategies. Saving...")
+            print(f"Step 5: Captured {len(strategies)} strategies. Saving file...")
             
             with open("data.json", "w") as f:
                 json.dump({
                     "last_updated": time.strftime("%H:%M:%S"),
-                    "final_url": page.url,
+                    "count": len(strategies),
                     "strategies": strategies
                 }, f, indent=4)
+            print("SUCCESS: data.json updated.")
 
         except Exception as e:
             print(f"CRITICAL ERROR: {str(e)}")
