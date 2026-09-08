@@ -1,0 +1,1 @@
+{"error": "Page.wait_for_selector: Timeout 60000ms exceeded.\nCall log:\n  - waiting for locator(\"a[href*='deployed-strategies'], .dashboard-wrapper\") to be visible\n", "url": "https://tradetron.tech/login"}
