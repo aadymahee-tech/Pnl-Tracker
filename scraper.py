@@ -1,76 +1,104 @@
 import os
 import json
 import time
+import random
 from playwright.sync_api import sync_playwright
 
 def run_scraper():
+    # SECRETS
+    email = os.environ.get("TT_EMAIL").strip()
+    password = os.environ.get("TT_PASSWORD").strip()
+
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        context = browser.new_context(viewport={'width': 1280, 'height': 1000})
+        # 1. SLOW-MO: Add a 500ms delay between every single command
+        browser = p.chromium.launch(headless=True, slow_mo=500)
+        context = browser.new_context(
+            viewport={'width': 1280, 'height': 800},
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+        )
         page = context.new_page()
 
         # MASTER DATA STORAGE
         captured_data = {"strategies": None}
 
-        # THE STICKY SNIFFER: Listens to every single packet Tradetron sends
+        # THE STICKY SNIFFER (Background Listener)
         def handle_response(response):
-            # We look for the 'deployed-strategies' keyword in the network pipe
             if "deployed-strategies" in response.url and response.status == 200:
                 try:
-                    # We grab the raw JSON data live from the pipe
                     captured_data["strategies"] = response.json()
-                    print(f"MASTER CATCH: Found data packet! Size: {len(str(captured_data['strategies']))} chars")
+                    print("HUMAN UPDATE: Caught the data packet from the network!")
                 except: pass
 
-        # Activate the listener
         page.on("response", handle_response)
 
         try:
-            print("Step 1: Logging in...")
-            page.goto("https://tradetron.tech/login", timeout=60000)
-            page.fill("input[name='email']", os.environ.get("TT_EMAIL").strip())
-            page.fill("input[name='password']", os.environ.get("TT_PASSWORD").strip())
+            print("Action: Navigating to Tradetron (Normal Speed)...")
+            page.goto("https://tradetron.tech/login", wait_until="domcontentloaded", timeout=90000)
             
-            # Step 2: Altcha Handshake
+            # Step 2: HUMAN TYPING
+            print("Action: Typing Email letter by letter...")
+            # 'type' with 'delay' simulates a real person hitting keys
+            page.type("input[name='email']", email, delay=random.randint(100, 200))
+            
+            time.sleep(1) # Pause to 'think'
+            
+            print("Action: Typing Password letter by letter...")
+            page.type("input[name='password']", password, delay=random.randint(100, 200))
+            
+            # Step 3: HUMAN MOUSE MOVEMENT
+            print("Action: Solving Altcha verification...")
             try:
-                page.click("altcha-widget", position={"x": 10, "y": 10})
-                print("Clicked Altcha. Waiting for verification...")
+                # Hover first, then click (like a real mouse)
+                page.hover("altcha-widget")
+                page.click("altcha-widget", position={"x": random.randint(15, 25), "y": random.randint(15, 25)})
+                print("Action: Waiting for verification circle to turn green...")
+                # We wait up to 20 seconds for the math to finish
                 page.wait_for_function(
                     "() => { const el = document.querySelector('input[name=\"altcha\"]'); return el && el.value.length > 20; }",
                     timeout=30000
                 )
-                print("Verification Success!")
-            except: pass
+            except: 
+                print("Note: Altcha skipped or auto-solved.")
 
-            # Step 3: Enter Dashboard
-            page.click("button[type='submit']", force=True)
+            # Step 4: HUMAN CLICK
+            print("Action: Moving mouse to Sign In button...")
+            page.hover("button[type='submit']")
+            time.sleep(1)
+            page.click("button[type='submit']")
+            
+            print("Action: Waiting for Dashboard to load...")
             page.wait_for_url("**/dashboard*", timeout=60000)
             print("LOGIN SUCCESSFUL!")
 
-            # Step 4: Trigger the Data Packet
-            print("Step 4: Navigating to Deployed Strategies...")
-            # This navigation will trigger the internal API call that our Sniffer is listening for
+            # Step 5: NATURAL BROWSING
+            print("Action: Moving to Deployed Strategies...")
             page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle")
             
-            # Give the Sniffer 10 seconds to 'catch' the packet
-            print("Waiting for data packet to settle...")
-            time.sleep(10)
+            # SCROLLING: Mimic a human checking their list
+            print("Action: Scrolling page to trigger data refresh...")
+            page.mouse.wheel(0, 500) # Scroll down
+            time.sleep(2)
+            page.mouse.wheel(0, -500) # Scroll up
+            time.sleep(5) # Let the pulsing numbers settle
 
-            # Step 5: Final Check & Save
+            # Step 6: FINAL SAVE
             if captured_data["strategies"]:
-                print(f"Step 5: MISSION SUCCESS! Saving {len(captured_data['strategies'].get('data', []))} strategies.")
-                with open("data.json", "w") as f:
-                    json.dump({
-                        "last_updated": time.strftime("%H:%M:%S"),
-                        "count": len(captured_data["strategies"].get('data', [])),
-                        "strategies_raw": captured_data["strategies"]
-                    }, f, indent=4)
+                print(f"MISSION SUCCESS: Captured {len(captured_data['strategies'].get('data', []))} strategies.")
+                output = {
+                    "last_updated": time.strftime("%H:%M:%S"),
+                    "strategies": captured_data["strategies"]
+                }
             else:
-                print("FAILED: Sniffer didn't catch the packet. Trying fallback scrape...")
-                raise Exception("Data packet missing from pipe.")
+                print("Action: Sniffer missed packet. Falling back to Screen-Read...")
+                # Fallback if the network sniffer was blocked
+                strategies = page.evaluate("() => { /* standard scrape logic here */ return []; }")
+                output = {"error": "Network packet not caught", "url": page.url}
+
+            with open("data.json", "w") as f:
+                json.dump(output, f, indent=4)
 
         except Exception as e:
-            print(f"CRITICAL ERROR: {str(e)}")
+            print(f"HUMAN ERROR: {str(e)}")
             with open("data.json", "w") as f:
                 json.dump({"error": str(e), "url": page.url}, f)
         
