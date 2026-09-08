@@ -5,44 +5,62 @@ from playwright.sync_api import sync_playwright
 
 def run_scraper():
     with sync_playwright() as p:
+        # Standard Desktop browser for best compatibility
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(viewport={'width': 1280, 'height': 1000})
         page = context.new_page()
 
         try:
-            print("Step 1: Logging in...")
+            print("Step 1: Navigating to Tradetron...")
             page.goto("https://tradetron.tech/login", timeout=60000)
+            time.sleep(5)
+
+            print("Step 2: Entering Credentials...")
             page.fill("input[name='email']", os.environ.get("TT_EMAIL").strip())
             page.fill("input[name='password']", os.environ.get("TT_PASSWORD").strip())
             
-            # Wait for Altcha click
+            # --- ALTCHA HANDSHAKE ---
+            print("Step 3: Handling ALTCHA (The Robot Check)...")
             try:
-                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=5000)
-                time.sleep(10) # Wait for math to finish
-            except: pass
+                # 1. Find the checkbox inside the altcha-widget and click it
+                # We wait for the 'I'm not a robot' text area to be clickable
+                page.click("altcha-widget", position={"x": 20, "y": 20}) 
+                print("SUCCESS: Clicked the verification box.")
+                
+                # 2. WAIT for the verification to complete
+                # ALTCHA math takes time. We wait for the hidden field to get its 'Proof' token.
+                print("Waiting for computer to finish math (Proof-of-Work)...")
+                page.wait_for_function(
+                    "() => document.querySelector('input[name=\"altcha\"]').value.length > 20",
+                    timeout=30000
+                )
+                print("SUCCESS: Human verification verified!")
+                
+            except Exception as e:
+                print(f"ALTCHA NOTE: {str(e)} (Proceeding anyway...)")
 
-            page.click("button[type='submit']")
-            page.wait_for_url("**/dashboard**", timeout=45000)
-            print("LOGIN SUCCESSFUL!")
-
-            # Step 2: GO TO THE DATA PAGE
-            print("Step 2: Navigating to Deployed Strategies...")
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle", timeout=60000)
+            print("Step 4: Clicking Sign In...")
+            # We use a slight delay before clicking to ensure Tradetron's server is ready
+            time.sleep(2)
+            page.click("button[type='submit']", force=True)
             
-            # Wait for any strategy card to appear
-            print("Waiting for strategies to load...")
-            page.wait_for_selector("text='by '", timeout=30000)
-            time.sleep(5) # Final buffer for P&L updates
+            print("Step 5: Waiting for Dashboard (Redirect)...")
+            # Wait until the URL changes to something that isn't 'login'
+            page.wait_for_url("**/dashboard**", timeout=45000)
+            print(f"LOGIN SUCCESS! Landed on: {page.url}")
 
-            # Step 3: Extract Data
+            # Now go to the data page
+            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle")
+            time.sleep(5)
+
+            # --- EXTRACTION ---
+            print("Step 6: Capturing P&L Data...")
             strategies = page.evaluate("""() => {
                 let data = [];
-                // Scans the page for any block that looks like a strategy
-                document.querySelectorAll('div, tr, section').forEach(el => {
+                document.querySelectorAll('.deployed-strategy-block, tr, .strategy-card').forEach(el => {
                     let txt = el.innerText;
-                    if (txt.includes('by ') && (txt.includes('₹') || txt.includes('Rs.')) && txt.length < 500 && txt.length > 50) {
-                        let lines = txt.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
-                        let name = lines[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
+                    if (txt.includes('by ') && (txt.includes('₹') || txt.includes('Rs.'))) {
+                        let name = txt.split('\\n')[0].trim();
                         let pnl = 0.0;
                         let matches = txt.match(/[₹Rs\\.]\\s?([+-]?[\\d,]+\\.?\\d*)/gi);
                         if (matches) {
@@ -55,22 +73,20 @@ def run_scraper():
                         data.push({ name, pnl });
                     }
                 });
-                // Remove duplicates by name
-                return [...new Map(data.map(i => [i.name, i])).values()];
+                return data;
             }""")
 
-            print(f"Step 3: Captured {len(strategies)} strategies.")
+            print(f"Step 7: Captured {len(strategies)} strategies. Saving...")
             
             with open("data.json", "w") as f:
                 json.dump({
                     "last_updated": time.strftime("%H:%M:%S"),
-                    "count": len(strategies),
+                    "final_url": page.url,
                     "strategies": strategies
                 }, f, indent=4)
-            print("DATA SAVED TO data.json")
 
         except Exception as e:
-            print(f"ERROR: {str(e)}")
+            print(f"CRITICAL ERROR: {str(e)}")
             with open("data.json", "w") as f:
                 json.dump({"error": str(e), "url": page.url}, f)
         
