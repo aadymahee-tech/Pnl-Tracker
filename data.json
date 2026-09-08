@@ -1,5 +1,5 @@
 {
-    "last_updated": "21:50:08",
+    "last_updated": "23:43:50",
     "strategies": {
         "success": true,
         "data": [
@@ -1592,8 +1592,8 @@
                 "deployment_date": "2026-07-22T00:00:00.000000Z",
                 "deployment_type": "LIVE AUTO",
                 "id": 30599410,
-                "run_counter": 33,
-                "status": "Exited",
+                "run_counter": 34,
+                "status": "Active",
                 "display_run_counter_pnl": true,
                 "sum_of_pnl": 3020.0019999999995,
                 "strategy_broker": {
@@ -4022,7 +4022,7 @@
         "paginate": {
             "current_page": 1,
             "last_page": 1,
-            "per_page": 20,
+            "per_page": "15",
             "total": 15
         }
     }
