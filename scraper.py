@@ -5,43 +5,48 @@ from playwright.sync_api import sync_playwright
 
 def run_scraper():
     with sync_playwright() as p:
-        # Start browser with human-like settings
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(
             viewport={'width': 1280, 'height': 800},
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
         )
         page = context.new_page()
 
         try:
-            print("Step 1: Connecting to Tradetron...")
-            page.goto("https://tradetron.tech/login", wait_until="domcontentloaded", timeout=60000)
+            print("Step 1: Connecting...")
+            page.goto("https://tradetron.tech/login", wait_until="networkidle", timeout=60000)
             
-            # Type credentials like a human
-            print("Step 2: Entering credentials...")
-            page.fill("input[name='email']", os.environ.get("TT_EMAIL"))
-            time.sleep(1)
-            page.fill("input[name='password']", os.environ.get("TT_PASSWORD"))
-            time.sleep(1)
-            
-            # Click and wait for ANY dashboard indicator
-            page.click("button[type='submit']")
-            print("Step 3: Waiting for Dashboard (be patient)...")
-            
-            # We wait for either the dashboard link OR the "Deployed" menu item
-            page.wait_for_selector("a[href*='deployed-strategies'], .dashboard-wrapper", timeout=60000)
-            print("Step 4: Login Successful! Loading strategies...")
+            # Close any blocking overlays (Mobile promo, etc.)
+            try:
+                page.locator(".tt-app-promo__close, .close, .modal-close").first.click(timeout=5000)
+                print("Step 1b: Closed blocking overlay.")
+            except: pass
 
-            # Go directly to the data page
+            print("Step 2: Entering Credentials...")
+            # Use multi-selector logic for robustness
+            email_field = page.locator("input[name='email'], #modalEmailSignIn, input[type='email']").first
+            pass_field = page.locator("input[name='password'], #modalPasswordSignIn, input[type='password']").first
+            
+            email_field.fill(os.environ.get("TT_EMAIL"))
+            pass_field.fill(os.environ.get("TT_PASSWORD"))
+            
+            print("Step 3: Attempting Sign In...")
+            login_btn = page.locator("button[type='submit'], #signInButtonPopup, .btn-login").first
+            login_btn.click()
+            
+            # WAIT FOR DASHBOARD OR SUCCESS INDICATOR
+            print("Step 4: Waiting for Dashboard...")
+            page.wait_for_selector("a[href*='deployed-strategies'], .dashboard-wrapper, text='Deployed'", timeout=60000)
+            print("Step 5: Login Success! Fetching P&L...")
+
             page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle", timeout=60000)
-            time.sleep(5) # Allow dynamic numbers to load
+            time.sleep(10) # Heavy buffer for pulsing data
 
-            # The Intelligent Extraction
             strategies = page.evaluate("""() => {
                 let results = [];
-                const items = document.querySelectorAll('tr, .strategy-card, .deployment-card');
-                items.forEach(item => {
-                    let text = item.innerText;
+                const cards = document.querySelectorAll('tr, .strategy-card, .deployment-card, .deployed-strategy-block');
+                cards.forEach(c => {
+                    let text = c.innerText;
                     if (text.includes('by ') && (text.includes('₹') || text.includes('Rs.'))) {
                         let name = text.split('\\n')[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
                         let pnl = 0.0;
@@ -59,23 +64,17 @@ def run_scraper():
                 return results;
             }""")
 
-            print(f"Step 5: Captured {len(strategies)} strategies.")
-            
-            # Save the pure data
-            output = {
-                "last_updated": time.strftime("%Y-%m-%d %H:%M:%S"),
-                "strategies": strategies
-            }
+            print(f"Step 6: Captured {len(strategies)} strategies.")
+            output = {"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}
             with open("data.json", "w") as f:
                 json.dump(output, f, indent=4)
-            print("Step 6: Data saved to data.json")
 
         except Exception as e:
             print(f"FATAL ERROR: {str(e)}")
-            # Log what the page looked like to help us debug
-            print(f"Current URL: {page.url}")
+            # Debug: Capture what the bot actually saw
+            page_text = page.content()[:500].replace('\n', ' ')
             with open("data.json", "w") as f:
-                json.dump({"error": str(e), "url": page.url}, f)
+                json.dump({"error": str(e), "url": page.url, "snapshot": page_text}, f)
         
         browser.close()
 
