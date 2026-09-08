@@ -1,1 +1,1 @@
-{"error": "Locator.fill: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_placeholder(\"Email\")\n", "url": "https://tradetron.tech/login"}
+{"error": "Timeout 45000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard\" until 'load'\n============================================================"}
