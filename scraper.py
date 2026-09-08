@@ -5,100 +5,68 @@ import random
 from playwright.sync_api import sync_playwright
 
 def run_scraper():
-    # SECRETS
     email = os.environ.get("TT_EMAIL").strip()
     password = os.environ.get("TT_PASSWORD").strip()
 
     with sync_playwright() as p:
-        # 1. SLOW-MO: Add a 500ms delay between every single command
         browser = p.chromium.launch(headless=True, slow_mo=500)
         context = browser.new_context(
             viewport={'width': 1280, 'height': 800},
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
         )
         page = context.new_page()
-
-        # MASTER DATA STORAGE
         captured_data = {"strategies": None}
 
-        # THE STICKY SNIFFER (Background Listener)
         def handle_response(response):
             if "deployed-strategies" in response.url and response.status == 200:
-                try:
-                    captured_data["strategies"] = response.json()
-                    print("HUMAN UPDATE: Caught the data packet from the network!")
+                try: captured_data["strategies"] = response.json()
                 except: pass
 
         page.on("response", handle_response)
 
         try:
-            print("Action: Navigating to Tradetron (Normal Speed)...")
-            page.goto("https://tradetron.tech/login", wait_until="domcontentloaded", timeout=90000)
+            print("Step 1: Loading Login Page...")
+            page.goto("https://tradetron.tech/login", wait_until="load", timeout=90000)
             
-            # Step 2: HUMAN TYPING
-            print("Action: Typing Email letter by letter...")
-            # 'type' with 'delay' simulates a real person hitting keys
-            page.type("input[name='email']", email, delay=random.randint(100, 200))
+            print("Step 2: Typing Credentials...")
+            page.type("input[name='email']", email, delay=random.randint(50, 150))
+            page.type("input[name='password']", password, delay=random.randint(50, 150))
             
-            time.sleep(1) # Pause to 'think'
+            print("Step 3: Solving Verification Box...")
+            # We wait specifically for the Altcha text to ensure it's loaded
+            page.wait_for_selector("altcha-widget", timeout=10000)
+            page.click("altcha-widget") 
             
-            print("Action: Typing Password letter by letter...")
-            page.type("input[name='password']", password, delay=random.randint(100, 200))
-            
-            # Step 3: HUMAN MOUSE MOVEMENT
-            print("Action: Solving Altcha verification...")
-            try:
-                # Hover first, then click (like a real mouse)
-                page.hover("altcha-widget")
-                page.click("altcha-widget", position={"x": random.randint(15, 25), "y": random.randint(15, 25)})
-                print("Action: Waiting for verification circle to turn green...")
-                # We wait up to 20 seconds for the math to finish
-                page.wait_for_function(
-                    "() => { const el = document.querySelector('input[name=\"altcha\"]'); return el && el.value.length > 20; }",
-                    timeout=30000
-                )
-            except: 
-                print("Note: Altcha skipped or auto-solved.")
+            print("Waiting 15 seconds for Math to complete...")
+            time.sleep(15) 
 
-            # Step 4: HUMAN CLICK
-            print("Action: Moving mouse to Sign In button...")
-            page.hover("button[type='submit']")
-            time.sleep(1)
+            print("Step 4: Clicking Sign In...")
             page.click("button[type='submit']")
             
-            print("Action: Waiting for Dashboard to load...")
-            page.wait_for_url("**/dashboard*", timeout=60000)
-            print("LOGIN SUCCESSFUL!")
-
-            # Step 5: NATURAL BROWSING
-            print("Action: Moving to Deployed Strategies...")
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle")
+            # --- THE MAGIC TRICK ---
+            # Instead of waiting for a redirect, we FORCE the browser to go to the data page
+            print("Step 5: Forcing Navigation to Deployed Strategies...")
+            time.sleep(5)
+            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle", timeout=60000)
             
-            # SCROLLING: Mimic a human checking their list
-            print("Action: Scrolling page to trigger data refresh...")
-            page.mouse.wheel(0, 500) # Scroll down
-            time.sleep(2)
-            page.mouse.wheel(0, -500) # Scroll up
-            time.sleep(5) # Let the pulsing numbers settle
+            # SCROLL to wake up the data
+            page.mouse.wheel(0, 1000)
+            time.sleep(5)
 
-            # Step 6: FINAL SAVE
             if captured_data["strategies"]:
-                print(f"MISSION SUCCESS: Captured {len(captured_data['strategies'].get('data', []))} strategies.")
-                output = {
-                    "last_updated": time.strftime("%H:%M:%S"),
-                    "strategies": captured_data["strategies"]
-                }
+                print(f"SUCCESS: Captured {len(captured_data['strategies'].get('data', []))} strategies.")
+                output = {"last_updated": time.strftime("%H:%M:%S"), "strategies": captured_data["strategies"]}
             else:
-                print("Action: Sniffer missed packet. Falling back to Screen-Read...")
-                # Fallback if the network sniffer was blocked
-                strategies = page.evaluate("() => { /* standard scrape logic here */ return []; }")
-                output = {"error": "Network packet not caught", "url": page.url}
+                print("CAPTURE FAILED. Taking a debug screenshot...")
+                page.screenshot(path="debug.png") # This will show us the problem!
+                output = {"error": "No data captured. Check debug.png in repo.", "url": page.url}
 
             with open("data.json", "w") as f:
                 json.dump(output, f, indent=4)
 
         except Exception as e:
-            print(f"HUMAN ERROR: {str(e)}")
+            print(f"ERROR: {str(e)}")
+            page.screenshot(path="debug.png")
             with open("data.json", "w") as f:
                 json.dump({"error": str(e), "url": page.url}, f)
         
