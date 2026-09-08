@@ -1,1 +1,1 @@
-{"error": "Response.json: Protocol error (Network.getResponseBody): No resource with given identifier found", "url": "https://tradetron.tech/deployed-strategies"}
+{"error": "Page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://tradetron.tech/login\", waiting until \"load\"\n", "url": "https://tradetron.tech/login"}
