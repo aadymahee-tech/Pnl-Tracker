@@ -10,7 +10,7 @@ def run_scraper():
         page = context.new_page()
 
         try:
-            # --- EXACT working v2.2 LOGIN LOGIC ---
+            # --- YOUR PROVEN LOGIN LOGIC ---
             print("Step 1: Navigating to Tradetron...")
             page.goto("https://tradetron.tech/login", timeout=60000)
             time.sleep(5)
@@ -19,13 +19,14 @@ def run_scraper():
             page.fill("input[name='email']", os.environ.get("TT_EMAIL").strip())
             page.fill("input[name='password']", os.environ.get("TT_PASSWORD").strip())
             
-            print("Step 3: Handling ALTCHA (The Robot Check)...")
+            print("Step 3: Handling ALTCHA...")
             try:
+                # Use a safe click on the widget
                 page.click("altcha-widget", position={"x": 20, "y": 20}) 
                 print("SUCCESS: Clicked the verification box.")
-                print("Waiting for computer to finish math (Proof-of-Work)...")
+                # Wait for the math to finish with a safer check
                 page.wait_for_function(
-                    "() => document.querySelector('input[name=\"altcha\"]').value.length > 20",
+                    "() => { const el = document.querySelector('input[name=\"altcha\"]'); return el && el.value.length > 20; }",
                     timeout=30000
                 )
                 print("SUCCESS: Human verification verified!")
@@ -36,30 +37,30 @@ def run_scraper():
             time.sleep(2)
             page.click("button[type='submit']", force=True)
             
+            # --- THE NAVIGATION FIX (Using URL detection instead of text) ---
             print("Step 5: Waiting for Dashboard...")
-            # We wait for the dashboard URL or the 'Logout' button to confirm entry
-            page.wait_for_selector("text='Logout'", timeout=45000)
+            # We wait for the URL to change to 'dashboard'. This is what worked in your 'Talking' logs.
+            page.wait_for_url("**/dashboard*", timeout=60000)
             print(f"LOGIN SUCCESS! Landed on: {page.url}")
 
-            # --- PLAYWRIGHT MASTER TAKES OVER HERE ---
-            print("Step 6: Master Scraper Active - Intercepting Data Pipe...")
+            # --- PLAYWRIGHT MASTER DATA CAPTURE ---
+            print("Step 6: Sniffing the Data Pipe...")
             
-            # We tell Playwright to 'Sniff' the network for the strategies list
-            # We wait for the internal API call 'deployed-strategies'
+            # We tell Playwright to 'Catch' the official data packet from Tradetron's server
             with page.expect_response("**/api/deployed-strategies**", timeout=60000) as response_info:
-                # This navigation triggers the background data packet
+                # Go to the deployed page to trigger the data packet
                 page.goto("https://tradetron.tech/deployed-strategies")
                 
-                # Playwright catches the 100% accurate database file here!
+                # CATCH the JSON here
                 raw_data = response_info.value.json()
-                print("Step 7: Master Catch Successful! Raw data captured.")
+                print("Step 7: Master Catch Successful! Data Captured.")
 
-                # We save the data exactly as Tradetron sent it to your browser
+                # Save the official, accurate data
                 with open("data.json", "w") as f:
                     json.dump({
                         "last_updated": time.strftime("%H:%M:%S"),
                         "count": len(raw_data.get('data', [])),
-                        "raw_tradetron_data": raw_data
+                        "strategies_raw": raw_data
                     }, f, indent=4)
                 
             print("MISSION COMPLETE: Professional data saved to data.json")
