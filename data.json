@@ -1,1 +1,1 @@
-{"error": "Timeout 45000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard\" until 'load'\n============================================================"}
+{"error": "Page.wait_for_selector: Timeout 45000ms exceeded.\nCall log:\n  - waiting for locator(\"text='Logout'\") to be visible\n    86 \u00d7 locator resolved to 2 elements. Proceeding with the first one: <span>Logout</span>\n", "url": "https://tradetron.tech/user/dashboard"}
