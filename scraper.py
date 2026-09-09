@@ -14,62 +14,67 @@ def run_scraper():
         page = context.new_page()
         captured_data = {"strategies": None}
 
-        page.on("response", lambda res: captured_data.update({"strategies": res.json()}) 
-                if "deployed-strategies" in res.url and res.status == 200 else None)
+        # SAFETY SHIELD: This sniffer will no longer crash the bot if it fails
+        def safe_sniffer(res):
+            try:
+                if "deployed-strategies" in res.url and res.status == 200:
+                    captured_data["strategies"] = res.json()
+            except:
+                pass # Ignore errors in the background
+
+        page.on("response", safe_sniffer)
 
         try:
-            print("Step 1: Loading Login Page...")
-            page.goto("https://tradetron.tech/login", wait_until="load", timeout=60000)
+            print("Step 1: Loading Tradetron...")
+            page.goto("https://tradetron.tech/login", wait_until="domcontentloaded", timeout=60000)
+            time.sleep(5)
             
-            # Remove blocking promos
+            # Remove any blocking popups
             page.evaluate("document.querySelectorAll('.tt-app-promo__close, .close').forEach(e => e.click())")
 
-            print("Step 2: Filling Credentials...")
+            print("Step 2: Entering Credentials...")
             page.fill("input[name='email']", email)
             page.fill("input[name='password']", password)
             
-            print("Step 3: Clicking Verification...")
-            # Click exactly in the Altcha checkbox area
-            page.click("altcha-widget", position={"x": 30, "y": 30})
-            print("Waiting 15s for verification...")
-            time.sleep(15)
-
-            # --- CAPTURE PRE-LOGIN STATE ---
+            # SAVE PROOF: Take a screenshot immediately after filling
             page.screenshot(path="login_attempt.png")
-            print("Screenshot saved: login_attempt.png")
+            print("Action: Captured login_attempt.png")
+
+            print("Step 3: Handling Verification...")
+            page.click("altcha-widget", position={"x": 30, "y": 30})
+            time.sleep(15) # Wait for math
 
             print("Step 4: Clicking Sign In...")
             page.click("button[type='submit']", force=True)
             
-            # Wait for transition
-            print("Waiting for dashboard redirect...")
+            print("Waiting for response...")
             time.sleep(15)
             
-            # --- CAPTURE POST-LOGIN STATE ---
+            # SAVE PROOF: Take a screenshot after the click
             page.screenshot(path="after_signin_click.png")
-            print("Screenshot saved: after_signin_click.png")
+            print("Action: Captured after_signin_click.png")
 
-            print(f"Current URL: {page.url}")
-
-            # Step 5: Force Deployed Page
-            print("Step 5: Moving to Deployed Strategies...")
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle", timeout=60000)
+            # Step 5: Final Navigation
+            print("Step 5: Moving to Deployed Page...")
+            page.goto("https://tradetron.tech/deployed-strategies", wait_until="load", timeout=60000)
             time.sleep(10)
             page.screenshot(path="final_deployed_view.png")
 
             if captured_data["strategies"]:
-                print(f"SUCCESS! Captured {len(captured_data['strategies'].get('data', []))} strategies.")
+                print("MISSION SUCCESS! Data packet caught.")
                 output = {"last_updated": time.strftime("%H:%M:%S"), "strategies": captured_data["strategies"]}
             else:
-                print("No data packet caught. Check final_deployed_view.png")
-                output = {"error": "No data found", "url": page.url}
+                print("Packet missed. Saving whatever we found on screen.")
+                output = {"error": "JSON packet missed", "url": page.url}
 
             with open("data.json", "w") as f:
                 json.dump(output, f, indent=4)
 
         except Exception as e:
             print(f"CRITICAL ERROR: {str(e)}")
-            page.screenshot(path="fatal_error.png")
+            # Even if we crash, try to take one final picture
+            try: page.screenshot(path="fatal_error.png")
+            except: pass
             with open("data.json", "w") as f:
                 json.dump({"error": str(e), "url": page.url}, f)
         
