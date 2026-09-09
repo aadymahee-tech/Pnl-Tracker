@@ -14,27 +14,23 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.9'
-
       - name: Install Dependencies
         run: |
           pip install playwright
           playwright install --with-deps chromium
-
       - name: Run Robot Brain
         env:
           TT_EMAIL: ${{ secrets.TT_EMAIL }}
           TT_PASSWORD: ${{ secrets.TT_PASSWORD }}
-          
         run: python scraper.py
       - name: Commit and Push Data
         run: |
           git config --global user.name "Robot-Secretary"
           git config --global user.email "bot@github.com"
-          git add data.json login_attempt.png after_signin_click.png final_deployed_view.png fatal_error.png || exit 0
-          git commit -m "Investigation Update: $(date)" || exit 0
+          git add data.json debug.png || exit 0
+          git commit -m "Pulse Update: $(date)" || exit 0
           git push
