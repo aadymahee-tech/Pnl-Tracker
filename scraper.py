@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import random
 from playwright.sync_api import sync_playwright
 
 def run_scraper():
@@ -12,92 +13,107 @@ def run_scraper():
         context = browser.new_context(viewport={'width': 1280, 'height': 1000})
         page = context.new_page()
         
-        # We use a list to store all caught packets for analysis
-        captured_packets = []
+        # Buffer to catch live data packets
+        captured_data = []
 
-        # THE PRECISION SNIFFER: Targets the hidden API data
         def sniffer(res):
-            # We specifically look for the 'api' endpoint
+            # Listen for the official strategies data packet
             if "/api/deployed-strategies" in res.url and res.status == 200:
                 try:
                     data = res.json()
-                    # Verify it's the correct data packet
-                    if isinstance(data, dict) and "data" in data:
-                        captured_packets.append(data)
+                    # CRITICAL FIX: Only catch if it's a real data dictionary
+                    if isinstance(data, dict):
+                        captured_data.append(data)
                 except: pass
 
         page.on("response", sniffer)
 
         try:
-            print("Step 1: Secure Login...")
-            page.goto("https://tradetron.tech/login", wait_until="domcontentloaded")
+            print("Step 1: Logging in...")
+            page.goto("https://tradetron.tech/login", wait_until="load")
             page.fill("input[name='email']", email)
             page.fill("input[name='password']", password)
             
+            # Altcha math wait
             try:
-                page.click("altcha-widget", position={"x": 25, "y": 25}, timeout=5000)
-                time.sleep(12) # Time for Altcha math
+                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=5000)
+                time.sleep(12)
             except: pass
             
             page.click("button[type='submit']", force=True)
             page.wait_for_url("**/dashboard*", timeout=30000)
             print("LOGIN SUCCESS!")
 
-            print("Step 2: Triggering Data Pulse...")
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="load")
+            # Step 2: Navigate to Strategies
+            print("Step 2: Preparing Deployed Page...")
+            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle")
             
-            # Reset Filters to force the server to send the fresh packet
-            print("Action: Resetting Filters and Switching to Lite...")
-            try: page.locator(".fa-recycle, .fa-sync").first.click(timeout=5000)
+            # --- YOUR CUSTOM PATHWAY ---
+            try:
+                print("Action: Resetting Filters...")
+                page.locator(".fa-recycle, .fa-sync").first.click(timeout=5000)
+                time.sleep(3)
             except: pass
             
-            # Force Switch to Lite Mode (as per your request)
             try:
                 if "Switch to Lite" in page.content():
+                    print("Action: Switching to Lite Mode...")
                     page.get_by_text("Switch to Lite").click()
+                    time.sleep(5)
             except: pass
 
-            print("Waiting for network pipe to fill (15s)...")
-            time.sleep(15)
+            # Step 3: Extract Data (Method A: Network Sniffer)
+            final_strategies = []
+            if captured_data:
+                print("Step 3: Processing captured network packets...")
+                for packet in reversed(captured_data):
+                    data_block = packet.get("data", [])
+                    if isinstance(data_block, list):
+                        for item in data_block:
+                            if item.get("deployment_type") == "LIVE AUTO":
+                                final_strategies.append({
+                                    "name": item.get('template', {}).get('name', 'Unnamed'),
+                                    "todayMove": item.get('all_pnl', 0.0),
+                                    "counterNo": item.get('run_counter', 0),
+                                    "counterPnl": item.get('last_pnl', 0.0),
+                                    "status": item.get('status', 'Active')
+                                })
+                        if final_strategies: break
 
-            # --- PROCESS DATA ---
-            final_list = []
-            if captured_packets:
-                # Use the latest packet caught from the Deployed page
-                raw = captured_packets[-1]
-                for item in raw.get('data', []):
-                    # Filter for 'LIVE AUTO' specifically
-                    if item.get('deployment_type') == 'LIVE AUTO':
-                        final_list.append({
-                            "name": item.get('template', {}).get('name', 'Unnamed'),
-                            "todayMove": item.get('all_pnl', 0.0),
-                            "counterNo": item.get('run_counter', 0),
-                            "counterPnl": item.get('last_pnl', 0.0),
-                            "status": item.get('status', 'Active')
-                        })
-                
-                # TERMINAL REPORT: Print names to console for you to see
-                print(f"VERIFICATION: Found {len(final_list)} LIVE AUTO strategies.")
-                for s in final_list:
-                    print(f" - {s['name']}: Today={s['todayMove']} / Counter={s['counterPnl']}")
-            
-            else:
-                print("FAILED: Sniffer missed the packet. Check debug.png.")
-                page.screenshot(path="debug.png")
+            # Step 4: Method B (Visual Fallback) - Read the screen if sniffer failed
+            if not final_strategies:
+                print("Step 3 (Fallback): Network missed. Reading screen cards directly...")
+                final_strategies = page.evaluate("""() => {
+                    let results = [];
+                    document.querySelectorAll('.strategy-card, .deployment-card, .deployed-strategy-block').forEach(card => {
+                        let text = card.innerText;
+                        if (text.includes('by ') && (text.includes('₹') || text.includes('Rs.'))) {
+                            let name = text.split('\\n')[0].trim();
+                            let pnlMatches = text.match(/[₹Rs\\.]\\s?([+-]?[\\d,]+\\.?\\d*)/gi);
+                            let pnl = 0.0;
+                            if (pnlMatches) {
+                                let val = pnlMatches[pnlMatches.length - 1].replace(/[₹Rs\\.\\s,]/gi, '');
+                                pnl = parseFloat(val) || 0.0;
+                                if (pnlMatches[pnlMatches.length - 1].includes('-')) pnl *= -1;
+                            }
+                            results.push({ name, todayMove: pnl, counterNo: 0, counterPnl: pnl, status: "Active" });
+                        }
+                    });
+                    return results;
+                }""")
 
-            # Final Save to GitHub
+            # Step 5: Final Save
+            print(f"MISSION SUCCESS: {len(final_strategies)} strategies found.")
             output = {
                 "last_updated": time.strftime("%H:%M:%S"),
-                "count": len(final_list),
-                "strategies": final_list
+                "strategies": final_strategies
             }
             
             with open("data.json", "w") as f:
                 json.dump(output, f, indent=4)
-            print("Step 3: Professional data saved to data.json")
 
         except Exception as e:
-            print(f"CRITICAL ERROR: {str(e)}")
+            print(f"FATAL ERROR: {str(e)}")
             with open("data.json", "w") as f:
                 json.dump({"error": str(e)}, f)
         
