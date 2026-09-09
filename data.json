@@ -1,1 +1,1 @@
-{"error": "Page.click: Unexpected token \"/\" while parsing css selector \"aria/\ue02b Filters\". Did you mean to CSS.escape it?\nCall log:\n  - waiting for aria/\ue02b Filters\n"}
+{"error": "Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard*\" until 'load'\n============================================================"}
