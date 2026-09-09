@@ -29,26 +29,24 @@ def run_scraper():
             except: pass
 
             # --- TASK C: CLICK LOGIN ---
-            print("TASK C: Clicking Login...")
+            print("TASK C: Clicking Login Button...")
             page.click("button[type='submit']", force=True)
 
-            # --- TASK D: THE FINAL DESTINATION (STATIC ADDRESS) ---
-            print("TASK D: Navigating to SELF DEPLOYED Strategies...")
+            # --- TASK D: THE STATIC DESTINATION ---
+            print("TASK D: Navigating to Deployed Strategies...")
             time.sleep(10)
-            # Static address as per your requirement
-            page.goto("https://tradetron.tech/deployed-strategies?creator=self", wait_until="load", timeout=60000)
-            print("CHECK D: Arrived at Self-Deployed page.")
+            page.goto("https://tradetron.tech/deployed-strategies", wait_until="load", timeout=60000)
+            print("CHECK D: Arrived at Deployed page.")
 
-            # --- TASK E: CLICK FILTER RESET (RESTORED) ---
+            # --- TASK E: CLICK FILTER RESET ---
             print("TASK E: Resetting Filters...")
             try:
-                # Target the red recycle/reset icon specifically
+                # Targeted click on the reset/recycle icon
                 reset_btn = page.locator(".fa-recycle, .fa-sync, .btn-danger").first
                 reset_btn.click(timeout=10000)
                 time.sleep(5)
-                print("CHECK E: Filters Reset successfully.")
-            except: 
-                print("CHECK E: Reset button not found, skipping.")
+                print("CHECK E: Filters Reset.")
+            except: pass
 
             # --- TASK F: CLICK SWITCH TO LITE ---
             print("TASK F: Enforcing Lite Mode...")
@@ -57,18 +55,16 @@ def run_scraper():
                 if lite_btn.is_visible(timeout=10000):
                     lite_btn.click()
                     time.sleep(5)
-                    print("CHECK F: Switched to Lite Mode.")
             except: pass
 
-            page.screenshot(path="final_proof.png")
-
-            # --- FINAL: PATTERN EXTRACTION ---
-            print("FINAL: Extracting Counter and P&L...")
+            # --- FINAL: DATA EXTRACTION (LIVE AUTO ONLY) ---
+            print("FINAL: Extracting Live Auto Data...")
             strategies = page.evaluate("""() => {
                 let data = [];
-                document.querySelectorAll('div, tr, section').forEach(el => {
+                document.querySelectorAll('.strategy-card, .deployment-card, .deployed-strategy-block').forEach(el => {
                     let text = el.innerText;
-                    if (text.includes('by ') && text.includes('Counter:')) {
+                    // Only capture 'LIVE AUTO' deployments
+                    if (text.toUpperCase().includes('LIVE AUTO') && (text.includes('₹') || text.includes('Rs.'))) {
                         let lines = text.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
                         let name = lines[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
                         
@@ -86,13 +82,13 @@ def run_scraper():
                             tMove = parseFloat(lastVal.replace(/[₹Rs\\.\\s,]/gi, '')) || 0.0;
                             if (lastVal.includes('-')) tMove *= -1;
                         }
-                        data.push({ name, counterNo: cNo, counterPnl: cPnl, pnl: tMove, status: "Active" });
+                        data.push({ name, counterNo: cNo, counterPnl: cPnl, pnl: tMove, status: "Live" });
                     }
                 });
                 return [...new Map(data.map(i => [i.name, i])).values()];
             }""")
 
-            print(f"SUCCESS: {len(strategies)} strategies captured.")
+            print(f"BATTLE WON: {len(strategies)} strategies captured.")
             with open("data.json", "w") as f:
                 json.dump({"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}, f, indent=4)
 
