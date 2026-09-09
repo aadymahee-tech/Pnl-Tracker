@@ -10,79 +10,101 @@ def run_scraper():
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        context = browser.new_context(
-            viewport={'width': 1280, 'height': 800},
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-        )
+        context = browser.new_context(viewport={'width': 1400, 'height': 1200})
         page = context.new_page()
-        captured_data = {"strategies": None}
-
-        # Background sniffer for the data packet
-        page.on("response", lambda res: captured_data.update({"strategies": res.json()}) 
-                if "deployed-strategies" in res.url and res.status == 200 else None)
 
         try:
-            print("Step 1: Navigating to Tradetron...")
-            page.goto("https://tradetron.tech/login", wait_until="load", timeout=60000)
-            
-            print("Step 2: Filling Credentials...")
-            page.wait_for_selector("input[name='email']", timeout=20000)
+            print("Step 1: Logging in...")
+            page.goto("https://tradetron.tech/login", wait_until="load")
             page.fill("input[name='email']", email)
             page.fill("input[name='password']", password)
             
-            # SAVE PROOF: Take a screenshot to show the boxes are filled
-            page.screenshot(path="before_click.png")
-            print("Screenshot saved: before_click.png")
-
-            print("Step 3: Handling Verification...")
+            # Handle Altcha box
             try:
-                # We click the widget and wait for the hidden field 'altcha'
-                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=10000)
-                print("Clicked Altcha. Waiting for math to finish...")
-                # Safe wait: we check if the element exists BEFORE reading 'value'
-                page.wait_for_function(
-                    "() => { const el = document.querySelector('input[name=\"altcha\"]'); return el && el.value.length > 10; }",
-                    timeout=20000
-                )
-                print("Verified!")
-            except:
-                print("Altcha Error or Timeout. Attempting login anyway...")
+                page.click("altcha-widget", position={"x": 20, "y": 20})
+                time.sleep(12) 
+            except: pass
 
-            print("Step 4: Clicking Sign In...")
-            page.click("button[type='submit']", force=True)
+            page.click("button[type='submit']")
+            page.wait_for_url("**/dashboard*", timeout=60000)
+            print("LOGIN SUCCESS!")
+
+            # Step 2: Navigate and Setup Layout
+            print("Step 2: Preparing Deployed Page...")
+            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle")
             
-            # Wait for any sign of success (URL change or 'Logout' text)
-            time.sleep(10)
-            print(f"Post-Login URL: {page.url}")
+            # A. Click Reset Filter (The red button next to Filters)
+            try:
+                page.locator(".fa-recycle, .fa-sync").first.click(timeout=5000)
+                print("Action: Filters Reset.")
+            except: pass
 
-            # Step 5: The "Walking" Logic
-            print("Step 5: Forcing Deployed Page...")
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle", timeout=60000)
-            
-            # Scroll to ensure all 15 strategies are triggered
-            print("Scrolling for data...")
-            page.evaluate("window.scrollTo(0, 500)")
-            time.sleep(5)
-            page.evaluate("window.scrollTo(0, 0)")
-            time.sleep(3)
+            # B. Click Switch to Lite (In the blue summary box)
+            try:
+                if "Switch to Lite" in page.content():
+                    page.get_by_text("Switch to Lite").click()
+                    print("Action: Switched to Lite Mode.")
+                    time.sleep(3)
+            except: pass
 
-            if captured_data["strategies"]:
-                strategies_list = captured_data["strategies"].get('data', [])
-                print(f"MISSION SUCCESS! Captured {len(strategies_list)} strategies.")
-                output = {"last_updated": time.strftime("%H:%M:%S"), "strategies": captured_data["strategies"]}
-            else:
-                print("Sniffer missed. Taking debug screenshot...")
-                page.screenshot(path="debug.png")
-                output = {"error": "Data not captured. Check debug.png", "url": page.url}
+            # Step 3: Extract Rich Data from Lite Cards
+            print("Step 3: Extracting Lite-Card Data...")
+            strategies = page.evaluate("""() => {
+                let results = [];
+                document.querySelectorAll('.strategy-card, .deployment-card, .deployed-strategy-block').forEach(card => {
+                    let text = card.innerText;
+                    if (text.includes('by ') && (text.includes('₹') || text.includes('Rs.'))) {
+                        let lines = text.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
+                        
+                        // Name & Identity
+                        let name = lines[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
+                        
+                        // Extract Capital
+                        let capMatch = text.match(/Capital:\\s*[₹Rs\\.]\\s?([\\d,]+\\.?\\d*)\\s*([Lk]?)/i);
+                        let capital = 0;
+                        if (capMatch) {
+                            capital = parseFloat(capMatch[1].replace(/,/g, ''));
+                            if (capMatch[2].toUpperCase() === 'L') capital *= 100000;
+                            if (capMatch[2].toUpperCase() === 'K') capital *= 1000;
+                        }
 
+                        // Extract Multiplier
+                        let multMatch = text.match(/Multiplier:\\s*(\\d+)x/i);
+                        let multiplier = multMatch ? parseInt(multMatch[1]) : 1;
+
+                        // Extract Status
+                        let status = "Active";
+                        if (text.includes('Live-Entered')) status = "Live-Entered";
+                        else if (text.includes('Exited')) status = "Exited";
+                        else if (text.includes('Error')) status = "Error";
+
+                        // Extract Current P&L (Bottom Right green/red value)
+                        let pnl = 0.0;
+                        let pnlMatches = text.match(/[₹Rs\\.]\\s?([+-]?[\\d,]+\\.?\\d*)/gi);
+                        if (pnlMatches) {
+                            let lastMatch = pnlMatches[pnlMatches.length - 1];
+                            let val = lastMatch.replace(/[₹Rs\\.\\s,]/gi, '');
+                            pnl = parseFloat(val) || 0.0;
+                            if (lastMatch.includes('-')) pnl *= -1;
+                        }
+
+                        results.push({ name, pnl, capital, multiplier, status });
+                    }
+                });
+                return results;
+            }""")
+
+            print(f"Step 4: Captured {len(strategies)} strategies.")
             with open("data.json", "w") as f:
-                json.dump(output, f, indent=4)
+                json.dump({
+                    "last_updated": time.strftime("%H:%M:%S"),
+                    "strategies": strategies
+                }, f, indent=4)
 
         except Exception as e:
-            print(f"CRITICAL ERROR: {str(e)}")
-            page.screenshot(path="debug.png")
+            print(f"ERROR: {str(e)}")
             with open("data.json", "w") as f:
-                json.dump({"error": str(e), "url": page.url}, f)
+                json.dump({"error": str(e)}, f)
         
         browser.close()
 
