@@ -1,1 +1,1 @@
-{"error": "'str' object has no attribute 'get'"}
+{"error": "Timeout 60000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/dashboard*\" until 'load'\n============================================================", "url": "https://tradetron.tech/login"}
