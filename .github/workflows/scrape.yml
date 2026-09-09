@@ -35,6 +35,6 @@ jobs:
         run: |
           git config --global user.name "Robot-Secretary"
           git config --global user.email "bot@github.com"
-          git add data.json debug.png before_click.png || exit 0
-          git commit -m "Update Live P&L: $(date)" || exit 0
+          git add data.json step1_dashboard.png step2_deployed.png step3_lite.png fatal_error.png page_debug.html || exit 0
+          git commit -m "Drill Update: $(date)" || exit 0
           git push
