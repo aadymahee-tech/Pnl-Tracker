@@ -10,77 +10,92 @@ def run_scraper():
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        context = browser.new_context(viewport={'width': 1600, 'height': 1200})
+        # Higher resolution to ensure all sidebars and buttons are reachable
+        context = browser.new_context(viewport={'width': 1920, 'height': 1080})
         page = context.new_page()
 
         try:
-            # --- TASK A-C: LOGIN ---
-            print("TASK A-C: Logging in...")
+            # --- TASK A: FILL LOGIN DETAILS ---
+            print("TASK A: Navigating and Filling Credentials...")
             page.goto("https://tradetron.tech/login", wait_until="load")
+            page.wait_for_selector("input[name='email']", timeout=30000)
             page.fill("input[name='email']", email)
             page.fill("input[name='password']", password)
+            page.screenshot(path="task_a_filled.png")
+            print("CHECK A: Credentials Filled.")
+
+            # --- TASK B: CONFIRM ALTCHA ---
+            print("TASK B: Solving ALTCHA Verification...")
             try:
-                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=5000)
-                time.sleep(12)
-            except: pass
+                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=10000)
+                page.wait_for_function(
+                    "() => document.querySelector('input[name=\"altcha\"]').value.length > 20",
+                    timeout=30000
+                )
+                print("CHECK B: Verification Confirmed.")
+                page.screenshot(path="task_b_verified.png")
+            except: 
+                print("CHECK B: Altcha step skipped.")
+
+            # --- TASK C: CLICK ON LOGIN ---
+            print("TASK C: Clicking Login Button...")
             page.click("button[type='submit']", force=True)
-            page.wait_for_url("**/dashboard*", timeout=30000)
-            print("CHECK: Logged in.")
-            page.screenshot(path="step1_login_success.png")
+            print("CHECK C: Login Clicked.")
 
-            # --- TASK D: LAND ON DEPLOYED PAGE ---
-            print("TASK D: Navigating to Deployed Strategies...")
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="load", timeout=60000)
-            time.sleep(5)
-            page.screenshot(path="step2_deployed_page.png")
+            # --- TASK D: THE FINAL DESTINATION (STATIC ADRESS) ---
+            print("TASK D: Navigating to SELF DEPLOYED Strategies...")
+            time.sleep(10)
+            # We go directly to the Self-Deployed filter URL as requested
+            page.goto("https://tradetron.tech/deployed-strategies?creator=self", wait_until="load", timeout=60000)
+            print("CHECK D: Arrived at Deployed Page.")
+            page.screenshot(path="task_d_arrived.png")
 
-            # --- TASK E: RESET FILTER ---
+            # --- TASK E: CLICK FILTER RESET ---
             print("TASK E: Resetting Filters...")
             try:
+                # Targeted click on the red reset icon
                 page.locator(".fa-recycle, .fa-sync, .btn-danger").first.click(timeout=10000)
                 time.sleep(5)
-                print("CHECK: Filters Reset.")
-                page.screenshot(path="step3_after_reset.png")
-            except: pass
+                print("CHECK E: Filters Reset.")
+                page.screenshot(path="task_e_reset.png")
+            except: print("CHECK E: Reset button skipped.")
 
-            # --- NEW TASK: FILTER BY 'SELF' ---
-            print("TASK: Applying 'SELF' Filter...")
+            # --- NEW TASK: SELECT 'SELF' FROM FILTERS ---
+            print("TASK: Selecting 'SELF' from Filter Menu...")
             try:
-                # Open Filter Menu
-                page.locator("button:has-text('Filters')").click(timeout=15000)
+                # Open Filter Menu (Using robust selector for both 'Filter' and 'Filters')
+                page.locator("button:has-text('Filter')").first.click(timeout=10000)
                 time.sleep(2)
-                page.screenshot(path="step4_filter_menu_open.png")
-                
-                # Select Self
+                # Select 'Self'
                 page.locator("select[name='creator'], #creator_id").select_option(label="Self")
                 time.sleep(1)
-                
-                # Click the blue Filter button
+                # Click the blue 'Filter' button to apply
                 page.locator("button:has-text('Filter')").last.click()
-                print("CHECK: 'Self' Filter Submitted.")
                 time.sleep(5)
-                page.screenshot(path="step5_self_filter_applied.png")
-            except Exception as e:
-                print(f"Note: Filter task had an issue: {str(e)}")
+                print("CHECK: 'Self' filter applied.")
+                page.screenshot(path="task_filter_applied.png")
+            except: print("Note: Filter step skipped.")
 
-            # --- TASK F: SWITCH TO LITE ---
-            print("TASK F: Enforcing Lite Mode...")
+            # --- TASK F: CLICK SWITCH TO LITE ---
+            print("TASK F: Enforcing Lite Mode Layout...")
             try:
                 lite_btn = page.get_by_text("Switch to Lite")
                 if lite_btn.is_visible(timeout=10000):
                     lite_btn.click()
                     time.sleep(5)
-                    print("CHECK: Lite Mode On.")
-                    page.screenshot(path="step6_lite_mode_on.png")
-            except: pass
+                    print("CHECK F: Switched to Lite Mode.")
+                    page.screenshot(path="task_f_lite_mode.png")
+            except: print("CHECK F: Already in Lite mode or button hidden.")
 
-            # --- FINAL: DATA EXTRACTION ---
-            print("FINAL: Extracting Data...")
+            # --- FINAL: DATA EXTRACTION (PATTERNS FROM IMAGES) ---
+            print("FINAL: Scraping patterned data...")
             strategies = page.evaluate("""() => {
                 let data = [];
-                document.querySelectorAll('div, tr, section').forEach(el => {
+                // In Lite Mode, strategies live in Table Rows (tr) or Card blocks
+                document.querySelectorAll('tr, .strategy-card, .deployment-card').forEach(el => {
                     let text = el.innerText;
-                    if (text.includes('by ') && text.includes('Counter:')) {
+                    // Logic check for name and Counter pattern
+                    if (text.includes('by ') && (text.includes('₹') || text.includes('Rs.'))) {
                         let lines = text.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
                         let name = lines[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
                         
@@ -104,13 +119,15 @@ def run_scraper():
                 return [...new Map(data.map(i => [i.name, i])).values()];
             }""")
 
-            print(f"MISSION SUCCESS: {len(strategies)} strategies saved.")
+            # SAVE
+            print(f"BATTLE WON: {len(strategies)} strategies captured.")
+            output = {"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}
             with open("data.json", "w") as f:
-                json.dump({"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}, f, indent=4)
+                json.dump(output, f, indent=4)
 
         except Exception as e:
-            print(f"FATAL ERROR: {str(e)}")
-            page.screenshot(path="fatal_error.png")
+            print(f"FAILED AT TASK: {str(e)}")
+            page.screenshot(path="task_failed.png")
             with open("data.json", "w") as f:
                 json.dump({"error": str(e)}, f)
         
