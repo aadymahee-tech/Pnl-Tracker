@@ -1,1 +1,4 @@
-{"error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://tradetron.tech/deployed-strategies\", waiting until \"networkidle\"\n"}
+{
+    "last_updated": "06:42:18",
+    "strategies": []
+}
