@@ -10,86 +10,68 @@ def run_scraper():
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        # Large window to ensure Lite cards load correctly
-        context = browser.new_context(viewport={'width': 1600, 'height': 1200})
+        context = browser.new_context(viewport={'width': 1280, 'height': 1000})
         page = context.new_page()
+        captured_data = {"strategies": None}
+
+        page.on("response", lambda res: captured_data.update({"strategies": res.json()}) 
+                if "deployed-strategies" in res.url and res.status == 200 else None)
 
         try:
-            print("Step 1: Logging in...")
-            page.goto("https://tradetron.tech/login", wait_until="domcontentloaded", timeout=60000)
+            print("Step 1: Loading Login Page...")
+            page.goto("https://tradetron.tech/login", wait_until="load", timeout=60000)
+            
+            # Remove blocking promos
+            page.evaluate("document.querySelectorAll('.tt-app-promo__close, .close').forEach(e => e.click())")
+
+            print("Step 2: Filling Credentials...")
             page.fill("input[name='email']", email)
             page.fill("input[name='password']", password)
             
-            try:
-                page.click("altcha-widget", position={"x": 20, "y": 20})
-                time.sleep(12) 
-            except: pass
+            print("Step 3: Clicking Verification...")
+            # Click exactly in the Altcha checkbox area
+            page.click("altcha-widget", position={"x": 30, "y": 30})
+            print("Waiting 15s for verification...")
+            time.sleep(15)
 
-            page.click("button[type='submit']")
-            page.wait_for_selector("text='Logout', .dashboard-wrapper", timeout=60000)
-            print("LOGIN SUCCESS!")
-            page.screenshot(path="step1_dashboard.png")
+            # --- CAPTURE PRE-LOGIN STATE ---
+            page.screenshot(path="login_attempt.png")
+            print("Screenshot saved: login_attempt.png")
 
-            # Step 2: Navigate to Data
-            print("Step 2: Loading Deployed Strategies...")
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="load", timeout=60000)
-            time.sleep(5)
-            page.screenshot(path="step2_deployed.png")
+            print("Step 4: Clicking Sign In...")
+            page.click("button[type='submit']", force=True)
             
-            # Reset Filters
-            try: 
-                print("Action: Resetting Filters...")
-                page.locator(".fa-recycle, .fa-sync").first.click(timeout=5000)
-                time.sleep(3)
-            except: pass
+            # Wait for transition
+            print("Waiting for dashboard redirect...")
+            time.sleep(15)
+            
+            # --- CAPTURE POST-LOGIN STATE ---
+            page.screenshot(path="after_signin_click.png")
+            print("Screenshot saved: after_signin_click.png")
 
-            # Switch to Lite
-            try:
-                if "Switch to Lite" in page.content():
-                    print("Action: Clicking Switch to Lite...")
-                    page.get_by_text("Switch to Lite").click()
-                    time.sleep(5)
-                    page.screenshot(path="step3_lite.png")
-            except: pass
+            print(f"Current URL: {page.url}")
 
-            # Step 3: Capturing Data (Ultra-Aggressive)
-            print("Step 3: Capturing Data...")
-            strategies = page.evaluate("""() => {
-                let results = [];
-                // Look for every block that has 'by' and a currency symbol
-                document.querySelectorAll('div, tr, section, .strategy-card').forEach(el => {
-                    let t = el.innerText;
-                    if (t.includes('by ') && (t.includes('₹') || t.includes('Rs.')) && t.length < 600 && t.length > 50) {
-                        let lines = t.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
-                        let name = lines[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
-                        
-                        let pnlMatches = t.match(/[₹Rs\\.]\\s?([+-]?[\\d,]+\\.?\\d*)/gi);
-                        if (pnlMatches) {
-                            let lastMatch = pnlMatches[pnlMatches.length - 1];
-                            let val = lastMatch.replace(/[₹Rs\\.\\s,]/gi, '');
-                            let pnl = parseFloat(val) || 0.0;
-                            if (lastMatch.includes('-')) pnl *= -1;
-                            results.push({ name, pnl });
-                        }
-                    }
-                });
-                return [...new Map(results.map(i => [i.name, i])).values()];
-            }""")
+            # Step 5: Force Deployed Page
+            print("Step 5: Moving to Deployed Strategies...")
+            page.goto("https://tradetron.tech/deployed-strategies", wait_until="networkidle", timeout=60000)
+            time.sleep(10)
+            page.screenshot(path="final_deployed_view.png")
 
-            if len(strategies) == 0:
-                print("ZERO FOUND. Saving page HTML for analysis...")
-                with open("page_debug.html", "w", encoding="utf-8") as f:
-                    f.write(page.content())
+            if captured_data["strategies"]:
+                print(f"SUCCESS! Captured {len(captured_data['strategies'].get('data', []))} strategies.")
+                output = {"last_updated": time.strftime("%H:%M:%S"), "strategies": captured_data["strategies"]}
+            else:
+                print("No data packet caught. Check final_deployed_view.png")
+                output = {"error": "No data found", "url": page.url}
 
-            print(f"Step 4: Process Complete. Found {len(strategies)} strategies.")
             with open("data.json", "w") as f:
-                json.dump({"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}, f, indent=4)
+                json.dump(output, f, indent=4)
 
         except Exception as e:
-            print(f"SCRAPE FAILED: {str(e)}")
+            print(f"CRITICAL ERROR: {str(e)}")
             page.screenshot(path="fatal_error.png")
             with open("data.json", "w") as f:
-                json.dump({"error": str(e)}, f)
+                json.dump({"error": str(e), "url": page.url}, f)
         
         browser.close()
 
