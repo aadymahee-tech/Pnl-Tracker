@@ -14,32 +14,40 @@ def run_scraper():
         page = context.new_page()
 
         try:
-            print("TASK: Secure Login...")
+            # --- TASK A: FILL LOGIN DETAILS ---
+            print("TASK A: Filling Credentials...")
             page.goto("https://tradetron.tech/login", wait_until="load")
+            page.wait_for_selector("input[name='email']", timeout=30000)
             page.fill("input[name='email']", email)
             page.fill("input[name='password']", password)
+
+            # --- TASK B: CONFIRM ALTCHA ---
+            print("TASK B: Solving ALTCHA...")
             try:
-                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=5000)
-                time.sleep(12)
+                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=10000)
+                page.wait_for_function("() => { const el = document.querySelector('input[name=\"altcha\"]'); return el && el.value.length > 20; }", timeout=30000)
             except: pass
+
+            # --- TASK C: CLICK LOGIN ---
+            print("TASK C: Clicking Login...")
             page.click("button[type='submit']", force=True)
-            page.wait_for_url("**/dashboard*", timeout=30000)
 
-            # --- TASK: NAVIGATE TO DEPLOYED ---
-            print("TASK: Teleporting to Deployed Strategies...")
-            page.goto("https://tradetron.tech/deployed-strategies", wait_until="load")
-            time.sleep(5)
+            # --- TASK D: THE FINAL DESTINATION (STATIC ADDRESS UPDATE) ---
+            print("TASK D: Navigating to SELF DEPLOYED Strategies...")
+            time.sleep(10)
+            # CHANGED: Added '?creator=self' to ensure it only grabs your strategies
+            page.goto("https://tradetron.tech/deployed-strategies?creator=self", wait_until="load", timeout=60000)
+            print("CHECK D: Arrived at Self-Deployed page.")
 
-            # --- TASK: SELECT 'SELF' CREATOR (Ensuring only your strategies show) ---
-            print("TASK: Filtering for 'Self' strategies...")
+            # --- TASK E: CLICK FILTER RESET ---
+            print("TASK E: Resetting Filters...")
             try:
-                # We click the Creator filter and select 'Self'
-                page.get_by_label("Creator").select_option(label="Self")
-                time.sleep(3)
-            except: print("Note: Self filter selection skipped.")
+                page.locator(".fa-recycle, .fa-sync, .btn-danger").first.click(timeout=10000)
+                time.sleep(5)
+            except: pass
 
-            # --- TASK: ENFORCE LITE MODE ---
-            print("TASK: Enforcing Lite Mode...")
+            # --- TASK F: CLICK SWITCH TO LITE ---
+            print("TASK F: Enforcing Lite Mode...")
             try:
                 lite_btn = page.get_by_text("Switch to Lite")
                 if lite_btn.is_visible(timeout=10000):
@@ -47,9 +55,8 @@ def run_scraper():
                     time.sleep(5)
             except: pass
 
-            page.screenshot(path="final_proof.png")
-
             # --- FINAL: PATTERN EXTRACTION ---
+            print("FINAL: Extracting Counter and P&L...")
             strategies = page.evaluate("""() => {
                 let data = [];
                 document.querySelectorAll('div, tr, section').forEach(el => {
@@ -78,7 +85,7 @@ def run_scraper():
                 return [...new Map(data.map(i => [i.name, i])).values()];
             }""")
 
-            print(f"SUCCESS: {len(strategies)} self-deployed strategies captured.")
+            print(f"SUCCESS: {len(strategies)} strategies captured.")
             with open("data.json", "w") as f:
                 json.dump({"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}, f, indent=4)
 
