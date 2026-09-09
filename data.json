@@ -1,4 +1,1 @@
-{
-    "last_updated": "12:45:13",
-    "strategies": []
-}
+{"error": "Page.click: Unexpected token \"/\" while parsing css selector \"aria/\ue02b Filters\". Did you mean to CSS.escape it?\nCall log:\n  - waiting for aria/\ue02b Filters\n"}
