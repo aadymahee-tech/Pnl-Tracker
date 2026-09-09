@@ -14,41 +14,45 @@ def run_scraper():
         page = context.new_page()
 
         try:
-            # --- TASK A: FILL LOGIN DETAILS ---
-            print("TASK A: Filling Credentials...")
+            # --- TASK A, B, C: LOGIN ---
+            print("TASK A-C: Logging in...")
             page.goto("https://tradetron.tech/login", wait_until="load")
-            page.wait_for_selector("input[name='email']", timeout=30000)
             page.fill("input[name='email']", email)
             page.fill("input[name='password']", password)
-
-            # --- TASK B: CONFIRM ALTCHA ---
-            print("TASK B: Solving ALTCHA...")
             try:
-                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=10000)
-                page.wait_for_function("() => { const el = document.querySelector('input[name=\"altcha\"]'); return el && el.value.length > 20; }", timeout=30000)
+                page.click("altcha-widget", position={"x": 20, "y": 20}, timeout=5000)
+                time.sleep(12)
             except: pass
-
-            # --- TASK C: CLICK LOGIN ---
-            print("TASK C: Clicking Login Button...")
             page.click("button[type='submit']", force=True)
 
-            # --- TASK D: THE STATIC DESTINATION ---
+            # --- TASK D: LAND ON DEPLOYED PAGE ---
             print("TASK D: Navigating to Deployed Strategies...")
             time.sleep(10)
             page.goto("https://tradetron.tech/deployed-strategies", wait_until="load", timeout=60000)
-            print("CHECK D: Arrived at Deployed page.")
 
-            # --- TASK E: CLICK FILTER RESET ---
+            # --- TASK E: RESET FILTER ---
             print("TASK E: Resetting Filters...")
             try:
-                # Targeted click on the reset/recycle icon
-                reset_btn = page.locator(".fa-recycle, .fa-sync, .btn-danger").first
-                reset_btn.click(timeout=10000)
+                page.locator(".fa-recycle, .fa-sync, .btn-danger").first.click(timeout=10000)
                 time.sleep(5)
-                print("CHECK E: Filters Reset.")
             except: pass
 
-            # --- TASK F: CLICK SWITCH TO LITE ---
+            # --- NEW TASK: FILTER BY 'SELF' (AS REQUESTED) ---
+            print("TASK: Selecting 'SELF' from Creator list...")
+            try:
+                # 1. Click the Filters button to open the list
+                page.get_by_role("button", name="Filters").click()
+                time.sleep(2)
+                # 2. Select 'Self' from the Creator dropdown
+                page.locator("select[name='creator'], #creator_id").select_option(label="Self")
+                # 3. Click the blue 'Filter' button to apply
+                page.get_by_role("button", name="Filter").click()
+                print("CHECK: 'Self' Filter Applied.")
+                time.sleep(5)
+            except Exception as filter_err:
+                print(f"Note: Filter step encountered an issue: {filter_err}")
+
+            # --- TASK F: SWITCH TO LITE ---
             print("TASK F: Enforcing Lite Mode...")
             try:
                 lite_btn = page.get_by_text("Switch to Lite")
@@ -57,14 +61,14 @@ def run_scraper():
                     time.sleep(5)
             except: pass
 
-            # --- FINAL: DATA EXTRACTION (LIVE AUTO ONLY) ---
-            print("FINAL: Extracting Live Auto Data...")
+            page.screenshot(path="final_proof.png")
+
+            # --- FINAL: DATA EXTRACTION ---
             strategies = page.evaluate("""() => {
                 let data = [];
-                document.querySelectorAll('.strategy-card, .deployment-card, .deployed-strategy-block').forEach(el => {
+                document.querySelectorAll('div, tr, section').forEach(el => {
                     let text = el.innerText;
-                    // Only capture 'LIVE AUTO' deployments
-                    if (text.toUpperCase().includes('LIVE AUTO') && (text.includes('₹') || text.includes('Rs.'))) {
+                    if (text.includes('by ') && text.includes('Counter:')) {
                         let lines = text.split('\\n').map(l => l.trim()).filter(l => l.length > 0);
                         let name = lines[0].replace(/^\\d+\\.\\s*/, '').split(' by ')[0].trim();
                         
@@ -82,13 +86,13 @@ def run_scraper():
                             tMove = parseFloat(lastVal.replace(/[₹Rs\\.\\s,]/gi, '')) || 0.0;
                             if (lastVal.includes('-')) tMove *= -1;
                         }
-                        data.push({ name, counterNo: cNo, counterPnl: cPnl, pnl: tMove, status: "Live" });
+                        data.push({ name, counterNo: cNo, counterPnl: cPnl, pnl: tMove, status: "Active" });
                     }
                 });
                 return [...new Map(data.map(i => [i.name, i])).values()];
             }""")
 
-            print(f"BATTLE WON: {len(strategies)} strategies captured.")
+            print(f"SUCCESS: {len(strategies)} strategies captured.")
             with open("data.json", "w") as f:
                 json.dump({"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}, f, indent=4)
 
