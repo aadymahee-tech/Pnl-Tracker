@@ -14,7 +14,7 @@ def run_scraper():
         page = context.new_page()
 
         try:
-            # --- TASK A, B, C: LOGIN ---
+            # --- TASK A-C: LOGIN ---
             print("TASK A-C: Logging in...")
             page.goto("https://tradetron.tech/login", wait_until="load")
             page.fill("input[name='email']", email)
@@ -24,33 +24,44 @@ def run_scraper():
                 time.sleep(12)
             except: pass
             page.click("button[type='submit']", force=True)
+            page.wait_for_url("**/dashboard*", timeout=30000)
+            print("CHECK: Logged in.")
+            page.screenshot(path="step1_login_success.png")
 
             # --- TASK D: LAND ON DEPLOYED PAGE ---
             print("TASK D: Navigating to Deployed Strategies...")
-            time.sleep(10)
             page.goto("https://tradetron.tech/deployed-strategies", wait_until="load", timeout=60000)
+            time.sleep(5)
+            page.screenshot(path="step2_deployed_page.png")
 
             # --- TASK E: RESET FILTER ---
             print("TASK E: Resetting Filters...")
             try:
                 page.locator(".fa-recycle, .fa-sync, .btn-danger").first.click(timeout=10000)
                 time.sleep(5)
+                print("CHECK: Filters Reset.")
+                page.screenshot(path="step3_after_reset.png")
             except: pass
 
-            # --- NEW TASK: FILTER BY 'SELF' (AS REQUESTED) ---
-            print("TASK: Selecting 'SELF' from Creator list...")
+            # --- NEW TASK: FILTER BY 'SELF' ---
+            print("TASK: Applying 'SELF' Filter...")
             try:
-                # 1. Click the Filters button to open the list
-                page.get_by_role("button", name="Filters").click()
+                # Open Filter Menu
+                page.locator("button:has-text('Filters')").click(timeout=15000)
                 time.sleep(2)
-                # 2. Select 'Self' from the Creator dropdown
+                page.screenshot(path="step4_filter_menu_open.png")
+                
+                # Select Self
                 page.locator("select[name='creator'], #creator_id").select_option(label="Self")
-                # 3. Click the blue 'Filter' button to apply
-                page.get_by_role("button", name="Filter").click()
-                print("CHECK: 'Self' Filter Applied.")
+                time.sleep(1)
+                
+                # Click the blue Filter button
+                page.locator("button:has-text('Filter')").last.click()
+                print("CHECK: 'Self' Filter Submitted.")
                 time.sleep(5)
-            except Exception as filter_err:
-                print(f"Note: Filter step encountered an issue: {filter_err}")
+                page.screenshot(path="step5_self_filter_applied.png")
+            except Exception as e:
+                print(f"Note: Filter task had an issue: {str(e)}")
 
             # --- TASK F: SWITCH TO LITE ---
             print("TASK F: Enforcing Lite Mode...")
@@ -59,11 +70,12 @@ def run_scraper():
                 if lite_btn.is_visible(timeout=10000):
                     lite_btn.click()
                     time.sleep(5)
+                    print("CHECK: Lite Mode On.")
+                    page.screenshot(path="step6_lite_mode_on.png")
             except: pass
 
-            page.screenshot(path="final_proof.png")
-
             # --- FINAL: DATA EXTRACTION ---
+            print("FINAL: Extracting Data...")
             strategies = page.evaluate("""() => {
                 let data = [];
                 document.querySelectorAll('div, tr, section').forEach(el => {
@@ -92,11 +104,13 @@ def run_scraper():
                 return [...new Map(data.map(i => [i.name, i])).values()];
             }""")
 
-            print(f"SUCCESS: {len(strategies)} strategies captured.")
+            print(f"MISSION SUCCESS: {len(strategies)} strategies saved.")
             with open("data.json", "w") as f:
                 json.dump({"last_updated": time.strftime("%H:%M:%S"), "strategies": strategies}, f, indent=4)
 
         except Exception as e:
+            print(f"FATAL ERROR: {str(e)}")
+            page.screenshot(path="fatal_error.png")
             with open("data.json", "w") as f:
                 json.dump({"error": str(e)}, f)
         
