@@ -32,19 +32,23 @@ def run_scraper():
             print("TASK C: Clicking Login...")
             page.click("button[type='submit']", force=True)
 
-            # --- TASK D: THE FINAL DESTINATION (STATIC ADDRESS UPDATE) ---
+            # --- TASK D: THE FINAL DESTINATION (STATIC ADDRESS) ---
             print("TASK D: Navigating to SELF DEPLOYED Strategies...")
             time.sleep(10)
-            # CHANGED: Added '?creator=self' to ensure it only grabs your strategies
+            # Static address as per your requirement
             page.goto("https://tradetron.tech/deployed-strategies?creator=self", wait_until="load", timeout=60000)
             print("CHECK D: Arrived at Self-Deployed page.")
 
-            # --- TASK E: CLICK FILTER RESET ---
+            # --- TASK E: CLICK FILTER RESET (RESTORED) ---
             print("TASK E: Resetting Filters...")
             try:
-                page.locator(".fa-recycle, .fa-sync, .btn-danger").first.click(timeout=10000)
+                # Target the red recycle/reset icon specifically
+                reset_btn = page.locator(".fa-recycle, .fa-sync, .btn-danger").first
+                reset_btn.click(timeout=10000)
                 time.sleep(5)
-            except: pass
+                print("CHECK E: Filters Reset successfully.")
+            except: 
+                print("CHECK E: Reset button not found, skipping.")
 
             # --- TASK F: CLICK SWITCH TO LITE ---
             print("TASK F: Enforcing Lite Mode...")
@@ -53,7 +57,10 @@ def run_scraper():
                 if lite_btn.is_visible(timeout=10000):
                     lite_btn.click()
                     time.sleep(5)
+                    print("CHECK F: Switched to Lite Mode.")
             except: pass
+
+            page.screenshot(path="final_proof.png")
 
             # --- FINAL: PATTERN EXTRACTION ---
             print("FINAL: Extracting Counter and P&L...")
