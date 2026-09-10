@@ -1,1 +1,1 @@
-{"error": "Page.wait_for_selector: Timeout 60000ms exceeded.\nCall log:\n  - waiting for locator(\"text='Logout', text='Dashboard', .dashboard-wrapper\") to be visible\n"}
+{"error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://tradetron.tech/login\", waiting until \"load\"\n"}
